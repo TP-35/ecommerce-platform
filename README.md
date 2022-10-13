@@ -13,7 +13,7 @@ Design and deploy an e-commerce platform to sell products of a business.
 # How to fork projects and push changes
 https://www.youtube.com/watch?v=8lGpZkjnkt4&ab_channel=Fireship
 
-• Don't forget to create your own branch named after you.
+• Don't forget to create your own branch named after the feature you're developing.
 
 # ejs 
 https://www.youtube.com/watch?v=yXEesONd_54&ab_channel=TheNetNinja
