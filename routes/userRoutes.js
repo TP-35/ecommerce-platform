@@ -26,7 +26,7 @@ router.post("/signup", async (req, res) =>{
         // Check if email already exists
         const [emailMatch] = await db.execute(`SELECT * FROM user WHERE email="${email}"`);
         const emailMatchUser = emailMatch[0];
-        if(emailMatchUser) return res.status(400).send("There is already an account attatched to this email.");
+        if(emailMatchUser) return res.status(400).send("There is already an account attached to this email.");
         
         // Check if username already exists
         const [usernameMatch] = await db.execute(`SELECT * FROM user WHERE username="${username}"`);
