@@ -2,9 +2,8 @@ const express = require("express");
 const ejs = require("ejs");
 const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
-require("dotenv").config();
 // Setup database
-require("./db.js");
+require("./db");
 
 // Setup Express
 const app = express();
