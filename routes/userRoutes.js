@@ -73,7 +73,6 @@ router.post("/login", async (req, res) => {
 
         // Compare hashed passwords
         const match = await bcrypt.compare(password, user.password);
-        console.log(match);
 
         if (!match) {
             return res.status(400).send("Passwords do not match.");
