@@ -1,24 +1,27 @@
 <html lang="en">
 <head>
-    <%- include('./partials/head.ejs', {title: "Home"}) %>
+<!-- <%- include('./partials/head.ejs', {title: "Login Page"}) %> -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>   
- <%- include('./partials/nav.ejs') %>
-    
-<h1>Login To Your Account</h1>
-<div>
-<form action="" method="" >
 
+<body id="main">   
+ <!-- <%- include('./partials/nav.ejs') %> -->
+ <img class="logo" src="logo.png" alt="KickStarterLogo" style="width:200px">   
+<a href="" id="back"><img src="back.png" alt="back" style="width:20px"> </a> 
+ <p id="loginTitle">Login To Your Account</p>  
+<div id="login">
+<form  action="" method="" >
 <input class = "textbox" type = "text" name="username" placeholder="Username/Email" required>
-<input class = "textbox" type="text" name="password" placeholder="Password" required>
-<button class = "submit" name="submit">Login</button>
-<p1>No Account?</p1>
-<a class="button" href="" target="_parent">Create Account</a>
+<input class = "textbox" type="password" name="password" placeholder="Password" required>
+<button id="button" class = "submit" name="submit">Login</button>
+<a class="button" id="button" href="register.html" target="_parent">Create Account</a>
+<p1 id="create">No Account?</p1>
 </form>   
 </div>
-<%- include('./partials/footer.ejs') %>ody>
+<!-- <%- include('./partials/footer.ejs') %>ody> -->
 </html>
