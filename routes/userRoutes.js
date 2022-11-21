@@ -11,10 +11,10 @@ router.post("/signup", async (req, res) => {
         let { email, username, password, confirmPassword } = req.body;
 
         // Remove whitespace
-        email = email.trim();
-        username = username.trim();
-        password = password.trim();
-        confirmPassword = confirmPassword.trim();
+        email = email?.trim() || "";
+        username = username?.trim() || "";
+        password = password?.trim() || "";
+        confirmPassword = confirmPassword?.trim() || "";
 
         // Make sure form was filled
         if (!email || !username || !password || !confirmPassword) return res.status(400).send("Please fill the form.");
