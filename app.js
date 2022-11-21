@@ -2,6 +2,8 @@ const express = require("express");
 const ejs = require("ejs");
 const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
+const accountRoutes = require("./routes/accountRoutes");
+
 // Setup database
 require("./db");
 
@@ -14,5 +16,7 @@ app.set('view engine', 'ejs');
 app.use("/", userRoutes);
 // Renders pages 
 app.use("/", pageRoutes);
+// Manages accounts
+app.use("/account", accountRoutes);
 
 app.listen(3000, () => console.log("Server running on port 3000"));
