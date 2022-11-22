@@ -33,7 +33,7 @@ router.get("/products", async (req, res) => {
         const products = products_rows[0];
 
         // Returns an error if there are no products currently stored in the table
-        if (!products)
+        if (!products) 
             return res.status(400).send("There are currently no products in this table.");
 
         // All valid products are added to the end of the array (even if there is only one, for consistency)
