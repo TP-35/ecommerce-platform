@@ -2,9 +2,10 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const db = require("../db");
+const auth = require("../middleware/auth.js");
 
 // Order with ID route
-router.get("/orders/:id", async (req, res) => {
+router.get("/orders/:id", auth, async (req, res) => {
     try {
         const order_id = req.params.id;
 
@@ -25,7 +26,7 @@ router.get("/orders/:id", async (req, res) => {
 })
 
 // List all Orders for User route
-router.get("/orders/search/:user", async (req, res) => {
+router.get("/orders/search/:user", auth, async (req, res) => {
     try {
         // Finds user from username
         const [user_rows] = await db.execute(`SELECT * FROM user WHERE username=?`, [req.params.user]);
@@ -56,7 +57,7 @@ router.get("/orders/search/:user", async (req, res) => {
 })
 
 // Create a new Order route
-router.post("/orders/:id", async (req, res) => {
+router.post("/orders/:id", auth, async (req, res) => {
     try {
         let { address, postcode, order_total } = req.body;
 
