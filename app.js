@@ -3,6 +3,7 @@ const ejs = require("ejs");
 const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const accountRoutes = require("./routes/accountRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const productRoutes = require("./routes/productRoutes");
 
 // Setup database
@@ -19,6 +20,8 @@ app.use("/", userRoutes);
 app.use("/", pageRoutes);
 // Manages accounts
 app.use("/account", accountRoutes);
+// Order Route
+app.use("/", orderRoutes);
 // Product Route
 app.use("/", productRoutes);
 
