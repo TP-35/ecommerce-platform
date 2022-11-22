@@ -4,7 +4,6 @@ const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const accountRoutes = require("./routes/accountRoutes");
 const productRoutes = require("./routes/productRoutes");
-const orderRoutes = require("./routes/orderRoutes");
 
 // Setup database
 require("./db");
