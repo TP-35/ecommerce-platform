@@ -34,7 +34,7 @@ router.get("/products", auth, async (req, res) => {
         const products = products_rows[0];
 
         // Returns an error if there are no products currently stored in the table
-        if (!products) 
+        if (!products)
             return res.status(400).send("There are currently no products in this table.");
 
         // All valid products are added to the end of the array (even if there is only one, for consistency)
@@ -54,6 +54,16 @@ router.post("/products", auth, async (req, res) => {
     try {
         let { name, description, category, cost, shipping_cost, image, quantity } = req.body;
 
+        // Remove whitespace
+        name = name?.trim() || "";
+        description = description?.trim() || "";
+        category = category?.trim() || "";
+        image = image?.trim() || "";
+
+        // Checks if the cost and shipping cost are valid float values
+        if (isNaN(cost)) return res.status(400).send("The inputted cost must be a valid float value.");
+        if (isNaN(shipping_cost)) return res.status(400).send("The inputted shipping cost must be a valid float value.");
+
         // Checks if the quantity is a valid integer value
         if (isNaN(quantity) || !Number.isInteger(quantity)) return res.status(400).send("The inputted quantity must be a valid integer number.");
 
@@ -62,13 +72,13 @@ router.post("/products", auth, async (req, res) => {
         if (!name || !description || !category || !cost || !shipping_cost || !image || (!quantity && quantity !== 0))
             return res.status(400).send("Please fill in the form.");
 
+        // Ensures correct format used
+        cost = (Math.round(cost * 100) / 100).toFixed(2);
+        shipping_cost = (Math.round(shipping_cost * 100) / 100).toFixed(2);
+
         // Checks if the name of the product already exists
         const [nameExists] = await db.execute("SELECT * FROM product WHERE name=?", [name]);
         if (nameExists[0]) return res.status(400).send("This name has already been used for a product. Please change it.");
-
-        // Checks if the cost and shipping cost are valid float values
-        if (isNaN(cost)) return res.status(400).send("The inputted cost must be a valid float value.");
-        if (isNaN(shipping_cost)) return res.status(400).send("The inputted shipping cost must be a valid float value.");
 
         // Checks if the image already exists for another product
         const [imageExists] = await db.execute("SELECT * FROM product WHERE image=?", [image]);
