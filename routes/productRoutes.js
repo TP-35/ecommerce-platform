@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+const auth = require("../middleware/auth.js");
 
 // Product with ID route
-router.get("/products/:id", async (req, res) => {
+router.get("/products/:id", auth, async (req, res) => {
     try {
         const product_id = req.params.id;
 
@@ -24,7 +25,7 @@ router.get("/products/:id", async (req, res) => {
 })
 
 // List all Products route
-router.get("/products", async (req, res) => {
+router.get("/products", auth, async (req, res) => {
     try {
         // Finds all products with a valid stock (quantity > 0)
         const [products_rows] = await db.execute(`SELECT * FROM product tb1
@@ -49,7 +50,7 @@ router.get("/products", async (req, res) => {
 })
 
 // Create a new Product route
-router.post("/products", async (req, res) => {
+router.post("/products", auth, async (req, res) => {
     try {
         let { name, description, category, cost, shipping_cost, image, quantity } = req.body;
 
@@ -92,7 +93,7 @@ router.post("/products", async (req, res) => {
 
 // Update an existing Product route
 // Only the changed fields should be sent here, not empty fields
-router.patch("/products/:id", async (req, res) => {
+router.patch("/products/:id", auth, async (req, res) => {
 
     // Checks to see if any changed fields are invalid
     const updates = Object.keys(req.body);
@@ -130,7 +131,8 @@ router.patch("/products/:id", async (req, res) => {
         const product_id = req.params.id;
 
         // Finds product from ID
-        const product = findProduct(product_id);
+        const [product_rows] = await db.execute(`SELECT * FROM product WHERE product_id=?;`, [product_id]);
+        const product = product_rows[0];
 
         // Returns an error if a product with this ID does not exist
         if (!product)
@@ -157,7 +159,7 @@ router.patch("/products/:id", async (req, res) => {
 });
 
 // Delete an existing Product route
-router.delete("/products/:id", async (req, res) => {
+router.delete("/products/:id", auth, async (req, res) => {
     try {
         const product_id = req.params.id;
 
