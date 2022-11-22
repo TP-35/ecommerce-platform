@@ -4,6 +4,7 @@ const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const accountRoutes = require("./routes/accountRoutes");
 const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 // Setup database
 require("./db");
@@ -20,6 +21,6 @@ app.use("/", pageRoutes);
 // Manages accounts
 app.use("/account", accountRoutes);
 // Product Route
-app.use("/products", productRoutes);
+app.use("/", productRoutes);
 
 app.listen(3000, () => console.log("Server running on port 3000"));
