@@ -6,6 +6,7 @@ const auth = require("../middleware/auth.js");
 
 /* Update user account
     todo verify user is logged in (auth middleware)
+    todo take username from token
     ? Change username or email 
 */
 

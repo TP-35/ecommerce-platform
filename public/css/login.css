@@ -34,6 +34,10 @@ text-align: center;
    margin-top: 40;
 }
 
+.error-message{
+    color: red;
+}
+
 #button {
   cursor: pointer;
   display: block;
@@ -48,7 +52,6 @@ text-align: center;
   padding-bottom: 10px;
   padding-top: 5px;
   font-size: 20px;
-  box-shadow: 0 0 20px 1px #6759ffc8;
 }
 
 #button.submit:hover {
@@ -63,8 +66,4 @@ text-decoration: none;
 .button#button:hover {
     background-color: #6759ffc2; 
     text-decoration: none;
-}
-
-#create {
-text-align: left;
 }

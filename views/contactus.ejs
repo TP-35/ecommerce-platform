@@ -4,24 +4,11 @@
 
     <body>
         <%- include('./partials/nav.ejs') %>
-    <div> 
-        <img width="150" src="/images/kslogo.png" id="logo">
-    </div>
-    <br>
-    <br>
+
     <div class="ContactUs">
         <h1>Contact Us</h1>
     </div>
     
-<br>
-    <div class="socialMedia">
-        <a href="https://en-gb.facebook.com/" class="fa fa-facebook"></a>
-        <a href="https://twitter.com/?lang=en" class="fa fa-twitter"></a>
-        <a href="https://www.instagram.com/" class="fa fa-instagram"></a>
-    </div>
-    
-    <br>
-    <br>
     <div class="container">
         <form>
             <label for="nameField" class="label name">Name:</label>
@@ -36,7 +23,7 @@
             <textarea id="Message" name="MessageBox" 
             placeholder="Please enter your message" style="height:75px"></textarea>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="button">
         </form>
     </div>
 
