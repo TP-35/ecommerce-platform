@@ -4,7 +4,7 @@ const db = require("../db");
 const auth = require("../middleware/auth.js");
 
 // Product with ID route
-router.get("/products/:id", auth, async (req, res) => {
+router.get("/products/:id", async (req, res) => {
     try {
         const product_id = req.params.id;
 
@@ -25,7 +25,7 @@ router.get("/products/:id", auth, async (req, res) => {
 })
 
 // List all Products route
-router.get("/products", auth, async (req, res) => {
+router.get("/products", async (req, res) => {
     try {
         // Finds all products with a valid stock (quantity > 0)
         const [products_rows] = await db.execute(`SELECT * FROM product tb1
