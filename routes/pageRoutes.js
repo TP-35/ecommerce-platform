@@ -7,4 +7,12 @@ router.get("/", (req, res) =>{
     res.render("index.ejs");
 })
 
+router.get("/aboutus", (req, res) =>{
+    res.render("aboutus.ejs");
+})
+
+router.get("/contactus", (req, res) =>{
+    res.render("contactus.ejs");
+})
+
 module.exports = router;
