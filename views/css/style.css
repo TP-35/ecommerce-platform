@@ -1,0 +1,72 @@
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    height: 200px;
+}
+
+.ContactUs {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.label {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    border-radius: 5px;
+    padding: 10px;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+input[type=submit] {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 9px;
+    border: 5px solid black;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 35px;
+    resize:vertical;
+    text-align: left;
+}
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 20px;
+    text-align: center;
+    text-decoration: none;
+    border-radius:50%;
+}
+
+.fa-facebook {
+    background: #3b5998;
+    color: white;
+}
+
+.fa-twitter {
+    background: #55acee;
+    color:white;
+}
+
+.fa-instagram {
+    background: #88127e;
+    color:white;
+}
+
+.socialMedia {
+    text-align: center;
+}
