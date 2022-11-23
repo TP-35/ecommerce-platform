@@ -19,9 +19,11 @@ section{
     width: 85vw;
     margin: 0 auto;
 }
-.image{
-        background: url("images/image1.png") 
-        no-repeat;
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .content{
     background: #fff;
@@ -105,10 +107,8 @@ section{
         width: 100%;
     }
     .image{
-        height: 100vh;
-    }
-    .content{
-        height: 100vh;
+        max-height: 50vh;
+        min-width: 50vw;
     }
     .content h2{
         font-size: 20px;
@@ -132,4 +132,7 @@ section{
     .icons li a{
         font-size: 15px;
     } 
+    .container{
+        flex-direction: column;
+    }
 }

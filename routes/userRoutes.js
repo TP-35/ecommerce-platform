@@ -53,7 +53,7 @@ router.post("/signup", async (req, res) => {
         //Create web token 
         const token = await jwt.sign({ data: username }, process.env.SECRET, { expiresIn: '24h' });
 
-        return res.send(token);
+        return res.send({token});
     } catch (e) {
         console.log(e);
         return res.status(500).send();
@@ -64,24 +64,26 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
+        if (!username || !password) return res.status(400).send("Please fill the form.");
+
         // Find user
         const [row] = await db.execute(`SELECT * FROM user WHERE username=?`, [username]);
         const user = row[0];
         if (!user) {
-            return res.status(400).send();
+            return res.status(400).send({message: "User does not exist."});
         }
 
         // Compare hashed passwords
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
-            return res.status(400).send("Passwords do not match.");
+            return res.status(400).send({message: "Passwords do not match."});
         }
 
         // Create web token
         const token = await jwt.sign({ data: username }, process.env.SECRET, { expiresIn: '24h' });
 
-        res.send(token);
+        res.send({token});
     } catch (e) {
         console.log(e);
         return res.status(500).send();

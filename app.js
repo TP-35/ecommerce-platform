@@ -13,6 +13,7 @@ require("./db");
 const app = express();
 app.use(express.json())
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + "/public"));
 
 // Login/Signup Routes
 app.use("/", userRoutes);
