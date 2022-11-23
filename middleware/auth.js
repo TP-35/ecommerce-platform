@@ -9,11 +9,12 @@ const auth = async (req, res, next) => {
 
     try {
         // Attempts to decode the token with the SECRET variable
-        const decode = jwt.verify(token, process.env.SECRET);
+        const decode = await jwt.verify(token, process.env.SECRET);
+        req.token = decode;
+        return next();
     } catch (e) {
         return res.status(401).send("This is an invalid token, please register a new one.");
     }
-    return next();
 }
 
 module.exports = auth;
