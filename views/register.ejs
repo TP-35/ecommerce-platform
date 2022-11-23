@@ -1,0 +1,32 @@
+<html lang="en">
+<head>
+<!-- <%- include('./partials/head.ejs', {title: "Home"}) %> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body id="main">   
+ <!-- <%- include('./partials/nav.ejs') %> -->
+ <!-- <img class="logo" src="logo.png" alt="KickStarterLogo" style="width:200px"> -->
+ <p id="title">Sign Up</p>  
+<div id="register"> 
+<form  action="" method="" >
+<input class = "textbox" type ="email"  name="email" placeholder="Email" required>
+<input class = "textbox" type = "text" name="username" placeholder="Username" required>
+<input class = "textbox" type="text" name="password" placeholder="Password" required>
+<input class = "textbox" type="text" name="confirmpassword" placeholder="Confirm Password" required>
+<input class = "textbox" type="text" name="address" placeholder="Address" required>
+<input class = "textbox" type="text" name="city" placeholder="City" required>
+<input class = "textbox" type="text" name="postcode" placeholder="Postcode" required>
+
+<button id="button" class = "submit" name="submit">Sign up</button>
+<a class="button" id="button" href="login.ejs" target="_parent">Login</a>
+<p1 id="create">Already have <br> an account?</p1>
+</form>   
+</div>
+<!-- <%- include('./partials/footer.ejs') %>ody> -->
+</html>
