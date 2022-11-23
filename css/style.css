@@ -1,13 +1,14 @@
-
-#main{
+#main {
     display: flexbox;
     text-align: center;
 background-color: #ffffffc9;
 }
-.logo{
+
+.logo {
 padding-top: 40;
 }
-#back{
+
+#back {
 align-content: left;
 display: block;
 margin-right:50em;
@@ -15,11 +16,9 @@ margin-top: 30px;
 text-align: center;
 }
 
-#title{
-
+#title {
     padding-left: 30px;
     color: #000000;
-  
     font-weight: bold;
     font-size: 45px;
     margin-bottom: 40;
@@ -33,41 +32,39 @@ text-align: center;
    background: rgba(255, 255, 255, 0.04);
    margin: auto;
    margin-top: 40;
-
-   
-   }
-
-   #button {
-    cursor: pointer;
-    display: block;
-    margin: auto;
-    margin-top: 20px;
-    color: rgb(255, 255, 255);
-    background-color: #6759ff;
-    border: 0;
-    border-radius: 5px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 10px;
-    padding-top: 5px;
-    font-size: 20px;
-    box-shadow: 0 0 20px 1px #6759ffc8;
 }
 
-#button.submit:hover{
+#button {
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  background-color: #6759ff;
+  border: 0;
+  border-radius: 5px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  font-size: 20px;
+  box-shadow: 0 0 20px 1px #6759ffc8;
+}
+
+#button.submit:hover {
     background-color: #6759ffc2;   
 }
 
-.button#button{
+.button#button {
 width: 250px;
 text-decoration: none;
-
 }
-.button#button:hover{
+
+.button#button:hover {
     background-color: #6759ffc2; 
     text-decoration: none;
 }
 
-#create{
+#create {
 text-align: left;
 }
