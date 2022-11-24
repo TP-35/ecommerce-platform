@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include('./partials/head.ejs', {title: "Contact Us", css:"/css/contactus.css"}) %>
-
+    <head>
+        <!--Importing a stylesheet for the page layout-->
+        <!--One stylesheet internal and for the logos external from the web-->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
     <body>
         <%- include('./partials/nav.ejs') %>
-
+    <div> 
+        <!--Added the logo to the page-->
+        <img width="150" src="kslogo.png" id="logo">
+    </div>
+    <br>
+    <br>
+    <!--Start of the contact us section, hence the 'Contact Us' label-->
     <div class="ContactUs">
         <h1>Contact Us</h1>
     </div>
     
+<br>
+<!--Included logos of social media platforms for our business-->
+    <!--Once clicked it redirects to social media platform-->
+    <div class="socialMedia">
+        <a href="https://en-gb.facebook.com/" class="fa fa-facebook"></a>
+        <a href="https://twitter.com/?lang=en" class="fa fa-twitter"></a>
+        <a href="https://www.instagram.com/" class="fa fa-instagram"></a>
+    </div>
+    
+    <br>
+    <br>
+    <!--This section is for the contactus form-->
     <div class="container">
         <form>
+            <!--First field box for the name-->
             <label for="nameField" class="label name">Name:</label>
             <input type="text" id="nameField" name="name" 
             placeholder="Please enter your name">
-            
+            <!--Second field box for the email address-->
             <label for="emailAddress" class="label email">Email Address:</label>
             <input type="text" id="emailAddress" name="emailAddressBox" 
             placeholder="Please enter your email address">
-
+            <!--Third box for the message/question to be asked-->
             <label for="Message" class="label message">Message:</label>
             <textarea id="Message" name="MessageBox" 
             placeholder="Please enter your message" style="height:75px"></textarea>
 
-            <input type="submit" value="Submit" id="button">
+            <input type="submit" value="Submit">
         </form>
     </div>
-
+    <!--End of page-->
     <%- include('./partials/footer.ejs') %>
     </body>
 </html>
