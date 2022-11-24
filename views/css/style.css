@@ -1,3 +1,4 @@
+/*Css for the display of logo*/
 #logo {
     display: block;
     margin-left: auto;
@@ -5,16 +6,16 @@
     width: 200px;
     height: 200px;
 }
-
+/*css for the 'contact us' label*/
 .ContactUs {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+/*css for the box labels*/
 .label {
     font-family: Arial, Helvetica, sans-serif;
 }
-
+/*Css for the container of the form*/
 .container {
     border-radius: 5px;
     padding: 10px;
@@ -22,7 +23,7 @@
     margin: auto;
     text-align: center;
 }
-
+/* Css for the submit button*/
 input[type=submit] {
     background-color: black;
     color: white;
@@ -31,7 +32,7 @@ input[type=submit] {
     border-radius: 5px;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+/*Css for the textboxes*/
 input[type=text], select, textarea {
     width: 100%;
     padding: 9px;
@@ -42,7 +43,7 @@ input[type=text], select, textarea {
     resize:vertical;
     text-align: left;
 }
-
+/*Css for the social media buttons*/
 .fa {
     padding: 20px;
     font-size: 30px;
@@ -51,22 +52,22 @@ input[type=text], select, textarea {
     text-decoration: none;
     border-radius:50%;
 }
-
+/*Css for the facebook button*/
 .fa-facebook {
     background: #3b5998;
     color: white;
 }
-
+/*Css for the Twitter button*/
 .fa-twitter {
     background: #55acee;
     color:white;
 }
-
+/*Css for the instagram button*/
 .fa-instagram {
     background: #88127e;
     color:white;
 }
-
+/*Css for the social media class*/
 .socialMedia {
     text-align: center;
 }
