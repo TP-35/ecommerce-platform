@@ -98,38 +98,3 @@ section{
 .icons li a:hover{
     color: #0d6efd;
 }
-
-@media(max-width: 992px){
-    section{
-        grid-template-columns: 1fr;
-        width: 100%;
-    }
-    .image{
-        height: 100vh;
-    }
-    .content{
-        height: 100vh;
-    }
-    .content h2{
-        font-size: 20px;
-        margin-top: 50px;
-    }
-    .content span{
-        margin: 20px 0;
-    }
-    .content p{
-        font-size: 14px;
-    }
-    .links li a{
-        font-size: 14px;
-    }
-    .links{
-        margin: 5px 0;
-    }
-    .links li{
-        padding: 6px 10px;
-    }
-    .icons li a{
-        font-size: 15px;
-    } 
-}
