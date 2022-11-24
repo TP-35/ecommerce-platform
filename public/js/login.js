@@ -28,9 +28,10 @@ const onLogin = async (e) =>{
         } 
         else if(res.status == 200){
             errorMessage.innerText = "";
-            console.log("Success!");
+            window.location.href = "/";
+/*             console.log("Success!");
             console.log(data.token);
-            localStorage.setItem("token", data.token);
+            localStorage.setItem("token", data.token); */
         }
     }catch(e){
         errorMessage.innerText = "Failed to make request.";

@@ -8,51 +8,61 @@ const jwt = require("jsonwebtoken");
 // Sign-up Route
 router.post("/signup", async (req, res) => {
     try {
-        let { email, username, password, confirmPassword } = req.body;
+        let { email, username, password, confirmPassword, city, postcode, address } = req.body;
 
         // Remove whitespace
         email = email?.trim() || "";
         username = username?.trim() || "";
         password = password?.trim() || "";
         confirmPassword = confirmPassword?.trim() || "";
+        city = city?.trim() || "";
+        postcode = postcode?.trim() || "";
+        address = address?.trim() || "";
+
 
         // Make sure form was filled
-        if (!email || !username || !password || !confirmPassword) return res.status(400).send("Please fill the form.");
+        if (!email || !username || !password || !confirmPassword || !city || !postcode || !address){
+            return res.status(400).send({message: "Please fill the form."});
+        }
 
         // Validate Email
         const emailIsValid = validator.validate(email);
-        if (!emailIsValid) return res.status(400).send("Email is invalid.");
+        if (!emailIsValid) return res.status(400).send({message: "Email is invalid."});
 
         // Check if email already exists
         const [emailMatch] = await db.execute(`SELECT * FROM user WHERE email=?`, [email]);
         const emailMatchUser = emailMatch[0];
-        if (emailMatchUser) return res.status(400).send("There is already an account attached to this email.");
+        if (emailMatchUser) return res.status(400).send({message: "There is already an account attached to this email."});
 
         // Check if username already exists
         const [usernameMatch] = await db.execute(`SELECT * FROM user WHERE username=?`, [username]);
         const usernameMatchUser = usernameMatch[0];
-        if (usernameMatchUser) return res.status(400).send("Username is taken.");
+        if (usernameMatchUser) return res.status(400).send({message: "Username is taken."});
 
         // Check if username and password are the same
-        if (password === username) return res.status(400).send("Username and Password cannot match");
+        if (password === username) return res.status(400).send({message: "Username and Password cannot match"});
 
         // Validate Password (Capital letter, number, special character, 8 characters)
         const regex = /^(?=.*[A-Z])^(?=.*[0-9])(?=.*[\[\]£!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9\[\]£!@#\$%\^\&*\)\(+=._-]{8,}$/;
         const result = regex.test(password);
-        if (!result) return res.status(400).send("Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character");
+        if (!result) return res.status(400).send({message: "Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character."});
 
         // Check passwords match
-        if (password !== confirmPassword) return res.status(400).send("Passwords do not match.");
+        if (password !== confirmPassword) return res.status(400).send({message: "Passwords do not match."});
 
         // Hash password
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         // Save user to database
-        await db.execute(`INSERT INTO user (email, username, password) VALUES (?, ?, ?);`, [email, username, hashedPassword]);
-
+        const user = await db.execute(`INSERT INTO user (email, username, password) VALUES (?, ?, ?);`, [email, username, hashedPassword]);
+        const userid = user[0].insertId;
+        // Save address to database
+        await db.execute(`INSERT INTO address (user_id, city, postcode, address) VALUES (?, ?, ?, ?)`, [userid, city, postcode, address]);
         //Create web token 
-        const token = await jwt.sign({ data: username }, process.env.SECRET, { expiresIn: '24h' });
-
+        const token = await jwt.sign({ user: username, email }, process.env.SECRET, { expiresIn: '24h' });
+        // redirect to homepage
+        //? currently using cookies to store token. May switch to local s
+        res.cookie("token", token, {httpOnly: true, maxAge:24*60*60*1000});
         return res.send({token});
     } catch (e) {
         console.log(e);
@@ -81,8 +91,11 @@ router.post("/login", async (req, res) => {
         }
 
         // Create web token
-        const token = await jwt.sign({ data: username }, process.env.SECRET, { expiresIn: '24h' });
-
+        const token = await jwt.sign({ user: {username: user.username, email: user.email} }, process.env.SECRET, { expiresIn: '1s' });
+        
+        // redirect to homepage
+        //? currently using cookies to store token. May switch to local s
+        res.cookie("token", token, {httpOnly: true, maxAge:24*60*60*1000});
         res.send({token});
     } catch (e) {
         console.log(e);

@@ -5,11 +5,12 @@
     <%- include('./partials/nav.ejs') %>
     <p id="title">Sign Up</p>  
     <div id="register"> 
-        <form  action="" method="" >
+        <form method="POST" onsubmit="onSignup(event)">
+            <p class="error-message" id="error-message"></p>
             <input class = "textbox" type ="email"  name="email" placeholder="Email" required>
             <input class = "textbox" type = "text" name="username" placeholder="Username" required>
-            <input class = "textbox" type="text" name="password" placeholder="Password" required>
-            <input class = "textbox" type="text" name="confirmpassword" placeholder="Confirm Password" required>
+            <input class = "textbox" type="password" name="password" placeholder="Password" required>
+            <input class = "textbox" type="password" name="confirmPassword" placeholder="Confirm Password" required>
             <input class = "textbox" type="text" name="address" placeholder="Address" required>
             <input class = "textbox" type="text" name="city" placeholder="City" required>
             <input class = "textbox" type="text" name="postcode" placeholder="Postcode" required>
@@ -19,6 +20,8 @@
             <a class="button" id="button" href="/login" target="_parent">Login</a>
         </form>   
     </div>
+
+    <script src="/js/signup.js"></script>
 </body>
 <%- include('./partials/footer.ejs') %>
 </html>
