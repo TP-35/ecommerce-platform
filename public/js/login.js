@@ -1,11 +1,11 @@
 const errorMessage = document.getElementById("error-message");
 
-const onLogin = async (e) =>{
+const onLogin = async (e) => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    try{
+    try {
         const res = await fetch("/login", {
             headers: {
                 'Accept': 'application/json',
@@ -20,20 +20,20 @@ const onLogin = async (e) =>{
 
         const data = await res.json();
 
-        if(res.status == 400){
+        if (res.status == 400) {
             errorMessage.innerText = data.message;
         }
-        else if(res.status == 500){
+        else if (res.status == 500) {
             errorMessage.innerText = "Internal server error. Please try again later";
         } 
-        else if(res.status == 200){
+        else if (res.status == 200) {
             errorMessage.innerText = "";
             window.location.href = "/";
 /*             console.log("Success!");
             console.log(data.token);
             localStorage.setItem("token", data.token); */
         }
-    }catch(e){
+    } catch(e) {
         errorMessage.innerText = "Failed to make request.";
     }
 }
