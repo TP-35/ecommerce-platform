@@ -89,7 +89,7 @@ router.post("/login", async (req, res) => {
         }
 
         // Create web token
-        const token = await jwt.sign({ user: {username: user.username, email: user.email} }, process.env.SECRET, { expiresIn: '1s' });
+        const token = await jwt.sign({ user: {username: user.username, email: user.email} }, process.env.SECRET, { expiresIn: '24h' });
         
         // redirect to homepage
         res.cookie("token", token, {httpOnly: true, maxAge:24*60*60*1000});

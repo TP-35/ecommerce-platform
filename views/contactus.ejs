@@ -3,7 +3,7 @@
 <%- include('./partials/head.ejs', {title: "Contact Us", css:"/css/contactus.css"}) %>
 
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/nav.ejs', {token}) %>
     <div class="ContactUs">
         <h1>Contact Us</h1>
     </div>
@@ -11,17 +11,19 @@
     <!--This section is for the contactus form-->
     <div class="container">
         <form action="mailto: admin@kickstarterclothing.com">
-            <!--First field box for the name-->
-            <label for="nameField" class="label name">Name:</label>
-            <input type="text" id="nameField" name="name" placeholder="Please enter your name">
-            <!--Second field box for the email address-->
-            <label for="emailAddress" class="label email">Email Address:</label>
-            <input type="text" id="emailAddress" name="emailAddressBox" placeholder="Please enter your email address">
-            <!--Third box for the message/question to be asked-->
-            <label for="Message" class="label message">Message:</label>
-            <textarea id="Message" name="MessageBox" placeholder="Please enter your message" style="height:75px"></textarea>
-            <!--Submit button which will send a message to the email of the admin-->
-            <input type="submit" value="Submit">
+            <div class="form-container"> 
+                <!--First field box for the name-->
+                <label for="nameField" class="label name">Name:</label>
+                <input type="text" id="nameField" name="name" placeholder="Please enter your name">
+                <!--Second field box for the email address-->
+                <label for="emailAddress" class="label email">Email Address:</label>
+                <input type="text" id="emailAddress" name="emailAddressBox" placeholder="Please enter your email address">
+                <!--Third box for the message/question to be asked-->
+                <label for="Message" class="label message">Message:</label>
+                <textarea id="Message" name="MessageBox" placeholder="Please enter your message" style="height:75px"></textarea>
+                <!--Submit button which will send a message to the email of the admin-->
+                <button class="btn btn-primary" id="button" type="submit">Submit</button>
+            </div>
         </form>
     </div>
     <!--End of page-->

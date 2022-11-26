@@ -1,16 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
 body{
     font-family: 'Playfair Display', serif;
     display: grid;
     background-color: #f4f4f4;
     align-content: center;
-    min-height: 100vh;
 }
 section{
     display: grid;
@@ -53,30 +47,7 @@ section{
     margin: 0 auto;
     line-height: 1.7;
 }
-.links{
-    margin: px 0;
-}
-.links li {
-    border: 0.5px solid #0d6efd;
-    background-color: #0d6efd;
-    list-style: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    width: 160px;
-    text-align: center;
-}
-.links li a{
-    text-transform: uppercase;
-    color: #fff;
-    text-decoration: none;
-}
-.links li:hover{
-    border-color: #fff;
-}
-.links li:hover a{
-    
-    color :#fff;
-}
+
 .vertical-line{
     height: 30px;
     width: 0.5px;
@@ -120,15 +91,7 @@ section{
     .content p{
         font-size: 14px;
     }
-    .links li a{
-        font-size: 14px;
-    }
-    .links{
-        margin: 5px 0;
-    }
-    .links li{
-        padding: 6px 10px;
-    }
+    
     .icons li a{
         font-size: 15px;
     } 

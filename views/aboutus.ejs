@@ -3,7 +3,7 @@
     <%- include('./partials/head.ejs', {title: "About Us", css:"/css/aboutus.css"}) %>
 
     <body>
-        <%- include('./partials/nav.ejs') %>
+        <%- include('./partials/nav.ejs', {token}) %>
         <section>
             <div class="container">
                 <div>
@@ -16,9 +16,7 @@
     
                     <p>Introducing Kickstarter Clothing, the go-to brand for all your fashion needs! With a wide variety of styles to choose from, you're sure to find something that suits your personality. Whether you're looking for something casual and comfortable or something a little more stylish, we've got you covered. And best of all, all of our clothing is machine washable so you can keep it looking fresh and new for years to come. Whether you're looking for something for yourself or a loved one, we hope you'll check out Kickstarter Clothing soon!</p>
     
-                    <ul class = "links">
-                        <li><a href = "/contactus">contact</a></li>
-                    </ul>
+                    <button class="btn btn-primary" id="button">contact</button>
     
                     <div class = "icons">
                         <li>
