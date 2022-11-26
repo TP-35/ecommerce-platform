@@ -1,0 +1,16 @@
+.nav-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-item {
+    margin: 0 1rem;
+}

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('./partials/head.ejs', {title: "Home", css: "/"}) %>
+<%- include('./partials/head.ejs', {title: "Home", css: "/"}) %>
+
 <body>
-    <%- include('./partials/nav.ejs') %>
-    
+    <%- include('./partials/nav.ejs', {token}) %>
+
     <!--Code for homepage goes here-->
     <h1>Kickstarter Clothing</h1>
     <!------------------------------->
     <%- include('./partials/footer.ejs') %>
 </body>
+
 </html>

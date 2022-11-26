@@ -1,4 +1,22 @@
 <nav>
     <!--Navbar code goes here-->
-    
+    <ul class="nav-list">
+        <div class="list-container">
+            <li class="nav-item"><a href="/">Home</a></li>
+            <li class="nav-item"><a href="/aboutus">About Us</a></li>
+            <li class="nav-item"><a href="/contactus">Contact Us</a></li>
+        </div>
+
+        <% if (token) { %>
+        <div class="list-container">
+            <li class="nav-item"><a href="/login">My Account</a></li>
+        </div>
+        <% } else { %>
+        <div class="list-container">
+            <li class="nav-item"><a href="/login">Log-In</a></li>
+            <li class="nav-item"><a href="/signup">Sign Up</a></li>
+        </div>
+        <%}%>
+         
+    </ul>
 </nav>
