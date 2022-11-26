@@ -19,9 +19,8 @@ router.post("/signup", async (req, res) => {
         postcode = postcode?.trim() || "";
         address = address?.trim() || "";
 
-
         // Make sure form was filled
-        if (!email || !username || !password || !confirmPassword || !city || !postcode || !address){
+        if (!email || !username || !password || !confirmPassword || !city || !postcode || !address) {
             return res.status(400).send({message: "Please fill the form."});
         }
 
