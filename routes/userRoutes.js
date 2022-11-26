@@ -61,7 +61,6 @@ router.post("/signup", async (req, res) => {
         //Create web token 
         const token = await jwt.sign({ user: username, email }, process.env.SECRET, { expiresIn: '24h' });
         // redirect to homepage
-        //? currently using cookies to store token. May switch to local s
         res.cookie("token", token, {httpOnly: true, maxAge:24*60*60*1000});
         return res.send({token});
     } catch (e) {
@@ -94,7 +93,6 @@ router.post("/login", async (req, res) => {
         const token = await jwt.sign({ user: {username: user.username, email: user.email} }, process.env.SECRET, { expiresIn: '1s' });
         
         // redirect to homepage
-        //? currently using cookies to store token. May switch to local s
         res.cookie("token", token, {httpOnly: true, maxAge:24*60*60*1000});
         res.send({token});
     } catch (e) {
