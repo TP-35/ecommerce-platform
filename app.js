@@ -23,7 +23,7 @@ app.use("/", userRoutes);
 // Renders pages 
 app.use("/", pageRoutes);
 // Manages accounts
-app.use("/account", accountRoutes);
+app.use("/", accountRoutes);
 // Order Route
 app.use("/", orderRoutes);
 // Product Route
