@@ -15,13 +15,13 @@ router.get("/products/:id", async (req, res) => {
 
         // Returns an error if the ID is not valid for any existing product
         if (!product)
-            return res.status(400).send("A product with this ID could not be found.");
+            return res.status(400).send({ message: "A product with this ID could not be found." });
 
         // Returns the requested product
         return res.send(product);
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 
@@ -36,7 +36,7 @@ router.get("/products", adminAuth, async (req, res) => {
 
         // Returns an error if there are no products currently stored in the table
         if (!products)
-            return res.status(400).send("There are currently no products in this table.");
+            return res.status(400).send({ message: "There are currently no products in this table." });
 
         // All valid products are added to the end of the array (even if there is only one, for consistency)
         let products_list = []
@@ -46,7 +46,7 @@ router.get("/products", adminAuth, async (req, res) => {
         return res.send(products_list);
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 
@@ -62,16 +62,16 @@ router.post("/products", adminAuth, async (req, res) => {
         image = image?.trim() || "";
 
         // Checks if the cost and shipping cost are valid float values
-        if (isNaN(cost)) return res.status(400).send("The inputted cost must be a valid float value.");
-        if (isNaN(shipping_cost)) return res.status(400).send("The inputted shipping cost must be a valid float value.");
+        if (isNaN(cost)) return res.status(400).send({ message: "The inputted cost must be a valid float value." });
+        if (isNaN(shipping_cost)) return res.status(400).send({ message: "The inputted shipping cost must be a valid float value." });
 
         // Checks if the quantity is a valid integer value
-        if (isNaN(quantity) || !Number.isInteger(quantity)) return res.status(400).send("The inputted quantity must be a valid integer number.");
+        if (isNaN(quantity) || !Number.isInteger(quantity)) return res.status(400).send({ message: "The inputted quantity must be a valid integer number." });
 
         // Accepts a quantity of 0, which will not be listed as a valid product
         // Checks if all fields have been filled
         if (!name || !description || !category || !cost || !shipping_cost || !image || (!quantity && quantity !== 0))
-            return res.status(400).send("Please fill in the form.");
+            return res.status(400).send({ message: "Please fill in the form." });
 
         // Ensures correct format used
         cost = (Math.round(cost * 100) / 100).toFixed(2);
@@ -79,11 +79,11 @@ router.post("/products", adminAuth, async (req, res) => {
 
         // Checks if the name of the product already exists
         const [nameExists] = await db.execute("SELECT * FROM product WHERE name=?", [name]);
-        if (nameExists[0]) return res.status(400).send("This name has already been used for a product. Please change it.");
+        if (nameExists[0]) return res.status(400).send({ message: "This name has already been used for a product. Please change it." });
 
         // Checks if the image already exists for another product
         const [imageExists] = await db.execute("SELECT * FROM product WHERE image=?", [image]);
-        if (imageExists[0]) return res.status(400).send("This image has already been used for a product. Please change it.");
+        if (imageExists[0]) return res.status(400).send({ message: "This image has already been used for a product. Please change it." });
 
         // Creates a new inventory entry and stores the id
         const inventory = await db.execute(`INSERT INTO inventory (quantity) VALUES (?);`, [quantity]);
@@ -98,7 +98,7 @@ router.post("/products", adminAuth, async (req, res) => {
         return res.send(product_id.toString());
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 
@@ -111,32 +111,32 @@ router.patch("/products/:id", adminAuth, async (req, res) => {
     const allowedUpdates = ['name', 'description', 'category', 'cost', 'shipping_cost', 'image', 'quantity'];
 
     const isValid = updates.every((update) => allowedUpdates.includes(update));
-    if (!isValid) return res.status(400).send("You are trying to update an invalid field.");
+    if (!isValid) return res.status(400).send({ message: "You are trying to update an invalid field." });
 
     // Checks to see if all fields have been left empty
-    if (updates.length == 0) return res.status(400).send("No changes have been made.");
+    if (updates.length == 0) return res.status(400).send({ message: "No changes have been made." });
 
     // Checks if the name already exists for another product
     if (updates.includes("name")) {
         const [nameExists] = await db.execute("SELECT * FROM product WHERE name=?", [req.body.name.toString()]);
-        if (nameExists[0]) return res.status(400).send("This name has already been used for a product. Please change it.");
+        if (nameExists[0]) return res.status(400).send({ message: "This name has already been used for a product. Please change it." });
     }
 
     // Checks if the image already exists for another product
     if (updates.includes("image")) {
         const [imageExists] = await db.execute("SELECT * FROM product WHERE image=?", [req.body.image.toString()]);
-        if (imageExists[0]) return res.status(400).send("This image has already been used for a product. Please change it.");
+        if (imageExists[0]) return res.status(400).send({ message: "This image has already been used for a product. Please change it." });
     }
 
     // Ensures the integer/float values are of the correct data type
     if (updates.includes("quantity") && !Number.isInteger(req.body.quantity))
-        return res.status(400).send("You have inputted an invalid quantity.");
+        return res.status(400).send({ message: "You have inputted an invalid quantity." });
 
     if (updates.includes("cost") && req.body.cost % 1 !== 0)
-        return res.status(400).send("You have inputted an invalid cost.");
+        return res.status(400).send({ message: "You have inputted an invalid cost." });
 
     if (updates.includes("shipping_cost") && req.body.shipping_cost % 1 !== 0)
-        return res.status(400).send("You have inputted an invalid shipping cost.");
+        return res.status(400).send({ message: "You have inputted an invalid shipping cost." });
 
     try {
         const product_id = req.params.id;
@@ -147,7 +147,7 @@ router.patch("/products/:id", adminAuth, async (req, res) => {
 
         // Returns an error if a product with this ID does not exist
         if (!product)
-            return res.status(400).send("A product with this ID could not be found.");
+            return res.status(400).send({ message: "A product with this ID could not be found." });
 
         // Handles the parameter substitution on the client (still safe from SQL injection)
         for (const update of updates) {
@@ -165,7 +165,7 @@ router.patch("/products/:id", adminAuth, async (req, res) => {
         return res.send(new_product);
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 });
 
@@ -180,7 +180,7 @@ router.delete("/products/:id", adminAuth, async (req, res) => {
 
         // Returns an error if the ID is not valid for any existing product
         if (!product)
-            return res.status(400).send("A product with this ID could not be found.");
+            return res.status(400).send({ message: "A product with this ID could not be found." });
 
         // Deletes the product and its respective inventory entry
         await db.execute(`DELETE FROM product WHERE product_id=?;`, [product_id]);
@@ -190,7 +190,7 @@ router.delete("/products/:id", adminAuth, async (req, res) => {
         return res.send(product);
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 

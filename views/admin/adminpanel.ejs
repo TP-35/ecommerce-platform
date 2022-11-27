@@ -35,9 +35,9 @@
                                         </tr>
                                         <!-- Returns an error message if there are no available records -->
                                         <% } } else { %>
-                                            <tr>
-                                                <td>There are no users in the table.</td>
-                                            </tr>
+                                            <table>
+                                                <%= users.message %>
+                                            </table>
                                             <% } %>
                                 </tbody>
                             </table>
@@ -73,10 +73,9 @@
                                         </tr>
                                         <!-- Returns an error message if there are no available records -->
                                         <% } } else { %>
-                                            <tr>
-                                                <td>There is no data available.</td>
-                                            </tr>
-                                            <% } %>
+                                            <table>
+                                                <%= products.message %>
+                                            </table>
                                 </tbody>
                             </table>
                         </div>

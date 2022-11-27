@@ -21,7 +21,7 @@ router.patch("/:username", auth, async (req, res) => {
         confirmPassword = confirmPassword?.trim() || "";
 
         // Make sure form was filled
-        if (!password || !confirmPassword) return res.status(400).send("Please fill the form.");
+        if (!password || !confirmPassword) return res.status(400).send({ message: "Please fill the form." });
 
         // Validate Password (Capital letter, number, special character, 8 characters)
         const regex = /^(?=.*[A-Z])^(?=.*[0-9])(?=.*[\[\]£!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9\[\]£!@#\$%\^\&*\)\(+=._-]{8,}$/;
@@ -29,7 +29,7 @@ router.patch("/:username", auth, async (req, res) => {
         if (!result) return res.status(400).send("Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character");
 
         // Check passwords match
-        if (password !== confirmPassword) return res.status(400).send("Passwords do not match.");
+        if (password !== confirmPassword) return res.status(400).send({ message: "Passwords do not match." });
 
         // Hash password
         const saltRounds = 10;
@@ -41,7 +41,7 @@ router.patch("/:username", auth, async (req, res) => {
         return res.send();
     } catch (e) {
         console.log(e);
-        res.status(500).send();
+        res.status(500).send(e);
     }
 })
 
@@ -56,7 +56,7 @@ router.delete("/:username", auth, async (req, res) => {
         res.send();
     } catch (e) {
         console.log(e);
-        res.send(500);
+        res.status(500).send(e);
     }
 })
 
@@ -68,7 +68,7 @@ router.get("/users", adminAuth, async (req, res) => {
 
         // Returns an error if there are no users currently stored in the table
         if (!users)
-            return res.status(400).send("There are currently no users in this table.");
+            return res.status(400).send({ message: "There are currently no users in this table." });
 
         // All users are added to the end of the array
         let users_list = []
@@ -80,7 +80,7 @@ router.get("/users", adminAuth, async (req, res) => {
         return res.send(users_list);
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 

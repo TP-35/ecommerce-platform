@@ -43,9 +43,9 @@
                                 </tr>
                                 <!-- Returns an error message if there are no available records  -->
                                 <% } } else { %>
-                                    <tr>
-                                        <td>There are no orders in the table.</td>
-                                    </tr>
+                                    <table>
+                                        <%= orders.message %>
+                                    </table>
                                     <% } %>
                         </tbody>
                     </table>

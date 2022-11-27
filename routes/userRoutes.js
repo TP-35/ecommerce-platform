@@ -64,7 +64,7 @@ router.post("/signup", async (req, res) => {
         return res.send({ token });
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 
@@ -72,7 +72,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
-        if (!username || !password) return res.status(400).send("Please fill the form.");
+        if (!username || !password) return res.status(400).send({ message: "Please fill the form." });
 
         // Find user
         const [row] = await db.execute(`SELECT * FROM user WHERE username=?`, [username]);
@@ -96,7 +96,7 @@ router.post("/login", async (req, res) => {
         res.send({ token });
     } catch (e) {
         console.log(e);
-        return res.status(500).send();
+        return res.status(500).send(e);
     }
 })
 
