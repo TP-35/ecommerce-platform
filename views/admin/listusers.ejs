@@ -30,7 +30,11 @@
                                         <%= users[i].user_id%>
                                     </td>
                                     <td>
-                                        <%= users[i].username%>
+                                        <script type="text/javascript">
+                                            var name = "<%= users[i].username%>";
+                                            document.write('<a href="updateuser/' + name + '"><%= users[i].username%> </a>');
+                                            </script>
+                                            </a>
                                     </td>
                                     <td>
                                         <%= users[i].email%>
@@ -39,7 +43,7 @@
                                 <!-- Returns an error message if there are no available records -->
                                 <% } } else { %>
                                     <table>
-                                        <%= products.message %>
+                                        <%= users.message %>
                                     </table>
                                     <% } %>
                         </tbody>
