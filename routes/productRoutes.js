@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth.js");
+const adminAuth = require("../middleware/adminauth.js");
 
 // Product with ID route
 router.get("/products/:id", async (req, res) => {
@@ -24,13 +25,13 @@ router.get("/products/:id", async (req, res) => {
     }
 })
 
-// List all Products route
-router.get("/products", async (req, res) => {
+// List all Products route (requires admin)
+router.get("/products", adminAuth, async (req, res) => {
     try {
         // Finds all products with a valid stock (quantity > 0)
         const [products_rows] = await db.execute(`SELECT * FROM product tb1
         JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
-        WHERE tb2.quantity > 0;`);
+        WHERE tb2.quantity > 0 ORDER BY product_id;`);
         const products = products_rows[0];
 
         // Returns an error if there are no products currently stored in the table
@@ -49,8 +50,8 @@ router.get("/products", async (req, res) => {
     }
 })
 
-// Create a new Product route
-router.post("/products", auth, async (req, res) => {
+// Create a new Product route (requires admin)
+router.post("/products", adminAuth, async (req, res) => {
     try {
         let { name, description, category, cost, shipping_cost, image, quantity } = req.body;
 
@@ -101,9 +102,9 @@ router.post("/products", auth, async (req, res) => {
     }
 })
 
-// Update an existing Product route
+// Update an existing Product route (requires admin)
 // Only the changed fields should be sent here, not empty fields
-router.patch("/products/:id", auth, async (req, res) => {
+router.patch("/products/:id", adminAuth, async (req, res) => {
 
     // Checks to see if any changed fields are invalid
     const updates = Object.keys(req.body);
@@ -168,8 +169,8 @@ router.patch("/products/:id", auth, async (req, res) => {
     }
 });
 
-// Delete an existing Product route
-router.delete("/products/:id", auth, async (req, res) => {
+// Delete an existing Product route (requires admin)
+router.delete("/products/:id", adminAuth, async (req, res) => {
     try {
         const product_id = req.params.id;
 
