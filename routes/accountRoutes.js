@@ -5,38 +5,57 @@ const router = express.Router();
 const auth = require("../middleware/auth.js");
 const adminAuth = require("../middleware/adminauth.js");
 
-/* Update user account
-    todo verify user is logged in (auth middleware)
-    todo take username from token
-    ? Change username or email 
-*/
-
-router.patch("/:username", auth, async (req, res) => {
+router.get("/users/:username", auth, async (req, res) => {
     try {
-        const { username } = req.params;
-        let { password, confirmPassword } = req.body;
+        const username = req.params.username;
+
+        // Finds user from username
+        const [user_row] = await db.execute(`SELECT * FROM user WHERE username=?;`, [username]);
+        const user = user_row[0];
+
+        // Returns an error if the username is not valid for any existing user
+        if (!user)
+            return res.status(400).send({ message: "This user could not be found." });
+
+        // Returns the requested user
+        return res.send(user);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send(e);
+    }
+})
+
+/* Update User route */
+router.patch("/users/:username", auth, async (req, res) => {
+    try {
+        var username = req.params.username;
+
+        const [rows] = await db.execute("SELECT user_id FROM user WHERE username=?", [username]);
+        const user_id = rows[0].user_id;
+
+        var { username, password, email, role_id } = req.body;
 
         // Remove whitespace
+        username = username?.trim() || "";
         password = password?.trim() || "";
-        confirmPassword = confirmPassword?.trim() || "";
-
+        email = email?.trim() || "";
+        
+        if (role_id != 1 && role_id != 2) return res.status(400).send({ message: "You have inputted an incorrect role number." })
+        
         // Make sure form was filled
-        if (!password || !confirmPassword) return res.status(400).send({ message: "Please fill the form." });
+        if (!username && !password && !email) return res.status(400).send({ message: "Please fill the form." });
 
         // Validate Password (Capital letter, number, special character, 8 characters)
         const regex = /^(?=.*[A-Z])^(?=.*[0-9])(?=.*[\[\]£!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9\[\]£!@#\$%\^\&*\)\(+=._-]{8,}$/;
         const result = regex.test(password);
-        if (!result) return res.status(400).send("Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character");
-
-        // Check passwords match
-        if (password !== confirmPassword) return res.status(400).send({ message: "Passwords do not match." });
+        if (!result) return res.status(400).send({ message: "Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character" });
 
         // Hash password
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
         // Update database
-        await db.execute(`UPDATE user SET password = ? WHERE username = ?;`, [hashedPassword, username]);
+        await db.execute(`UPDATE user SET (username, password, email) values (?, ?, ?) WHERE user_id = ?;`, [username, hashedPassword, email, user_id]);
 
         return res.send();
     } catch (e) {
