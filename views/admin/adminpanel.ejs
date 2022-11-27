@@ -16,8 +16,10 @@
                                     <tr>
                                         <th id="recent" scope="col">Recent Users</th>
                                         <th scope="col"></th>
+                                        <th scope="col"></th>
                                     </tr>
                                     <tr>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Username</th>
                                         <th scope="col">Email</th>
                                     </tr>
@@ -26,6 +28,9 @@
                                     <!-- Loops through users and populates table -->
                                     <% if (users.length) { for (var i=0; i < users.length; i++) { %>
                                         <tr>
+                                            <td>
+                                                <%= users[i].user_id%>
+                                            </td>
                                             <td>
                                                 <%= users[i].username%>
                                             </td>
@@ -50,8 +55,10 @@
                                         <th id="recent" scope="col">Recent Products</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
+                                        <th scope="col"></th>
                                     </tr>
                                     <tr>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Category</th>
@@ -61,6 +68,9 @@
                                     <!-- Loops through products and populates table -->
                                     <% if (products.length) { for (var i=0; i < products.length; i++) { %>
                                         <tr>
+                                            <td>
+                                                <%= products[i].product_id%>
+                                            </td>
                                             <td>
                                                 <%= products[i].name%>
                                             </td>
@@ -74,8 +84,9 @@
                                         <!-- Returns an error message if there are no available records -->
                                         <% } } else { %>
                                             <table>
-                                                <%= products.message %>
+                                                <%= products.message%>
                                             </table>
+                                            <% } %>
                                 </tbody>
                             </table>
                         </div>
