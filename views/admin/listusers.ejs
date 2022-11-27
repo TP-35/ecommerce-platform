@@ -1,0 +1,54 @@
+<html lang="en">
+
+<%- include('../partials/head.ejs', {title: "List Users" , css: "/css/adminpanel.css" }) %>
+
+    <body>
+        <%- include('../partials/nav.ejs') %>
+            <div class="container">
+
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <table class="table">
+                        <!-- Sets header for table contents -->
+                        <thead>
+                            <tr>
+                                <th id="recent" scope="col">List Users</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col">User ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loops through users and populates table -->
+                            <% if (users.length) { for (var i=0; i < users.length; i++) { %>
+                                <tr>
+                                    <td>
+                                        <%= users[i].user_id%>
+                                    </td>
+                                    <td>
+                                        <%= users[i].username%>
+                                    </td>
+                                    <td>
+                                        <%= users[i].email%>
+                                    </td>
+                                </tr>
+                                <!-- Returns an error message if there are no available records -->
+                                <% } } else { %>
+                                    <tr>
+                                        <td>There are no users in the table.</td>
+                                    </tr>
+                                    <% } %>
+                        </tbody>
+                    </table>
+            </div>
+
+            <script src="/js/adminpanel.js"></script>
+            <%- include('../partials/footer.ejs') %>
+
+    </body>
+
+</html>
