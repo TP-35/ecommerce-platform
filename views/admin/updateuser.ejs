@@ -9,49 +9,56 @@
 
                 <%- include('../partials/sidebar.ejs') %>
 
-                    <form>
+                    <form method="POST" action="/users/<%=user.username%>">
                         <table class="table">
                             <!-- Sets header for table contents -->
                             <thead>
                                 <tr>
                                     <th scope="col">User ID</th>
                                     <th scope="col">Username</th>
+                                    <th scope="col">Password</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Role ID</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Loops through users and populates table -->
-                                <% if (users.length) { for (var i=0; i < users.length; i++) { %>
-                                    <tr>
-                                        <td>
-                                            <input type="text" value=<%=users[i].user_id%>></input>
-                                        </td>
-                                        <td>
-                                            <input type="text" value=<%=users[i].username%>></input>
-                                        </td>
-                                        <td>
-                                            <input type="text" value=<%=users[i].email%>></input>
-                                        </td>
-                                        <td>
-                                            <input type="text" value=<%=users[i].role_id%>></input>
-                                        </td>
-                                    </tr>
-                                    <!-- Returns an error message if there are no available records -->
-                                    <% } } else { %>
-                                        <table>
-                                            <%= products.message %>
-                                        </table>
-                                        <% } %>
+                                <tr>
+                                    <td>
+                                        <%= user.user_id%>
+                                    </td>
+                                    <td>
+                                        <input id="username" type="text" name="username" value="<%=user.username%>"></input>
+                                    </td>
+                                    <td>
+                                        <input id="password" type="password" name="password" value=""></input>
+                                    </td>
+                                    <td>
+                                        <input id="email" type="email" name="email" value="<%=user.email%>"></input>
+                                    </td>
+                                    <td>
+                                        <input id="role" type="text" name="role" value="<%=user.role_id%>"></input>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+                        <!-- Calls a function that updates the database with changed records -->
+                        <button class="submit" style="float: right;" onclick="addUser()">Submit
+                            Changes</button>
                     </form>
-                    <!-- Calls a function that updates the database with changed records -->
-                    <button type="submit" onclick="submitChange()">Submit Changes</button>
+                    <script>
+                        function addUser() {
+                            var name = document.getElementById("username").value;
+                            var password = document.getElementById("password").value;
+                            var email = document.getElementById("email").value;
+                            var role = document.getElementById("role").value;
 
+                           /* onUserUpdate(name, password, email, role); */
+
+                        }
+                    </script>
             </div>
 
-            <script src="/js/adminpanel.js"></script>
+            <script src="/js/adminpanel.js" type="text/javascript"></script>
             <%- include('../partials/footer.ejs') %>
 
     </body>
