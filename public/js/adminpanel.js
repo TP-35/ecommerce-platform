@@ -14,8 +14,3 @@ for (i = 0; i < dropdown.length; i++) {
         }
     });
 }
-
-/* Submits user changes to the database */
-function submitChange() {
-    console.log("to do");
-}

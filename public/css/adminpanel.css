@@ -74,6 +74,12 @@
     width: 100%;
 }
 
+@media (max-width: 1300px) {
+    .flex-col {
+        width: 80%
+    }
+}
+
 .flex-content {
     display: flex;
     flex-direction: row;
