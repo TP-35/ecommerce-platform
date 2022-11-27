@@ -1,0 +1,59 @@
+<html lang="en">
+
+<%- include('../partials/head.ejs', {title: "Update User" , css: "/css/adminpanel.css" }) %>
+
+    <body>
+        <%- include('../partials/nav.ejs') %>
+
+            <div class="container">
+
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <form>
+                        <table class="table">
+                            <!-- Sets header for table contents -->
+                            <thead>
+                                <tr>
+                                    <th scope="col">User ID</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loops through users and populates table -->
+                                <% if (users.length) { for (var i=0; i < users.length; i++) { %>
+                                    <tr>
+                                        <td>
+                                            <input type="text" value=<%=users[i].user_id%>></input>
+                                        </td>
+                                        <td>
+                                            <input type="text" value=<%=users[i].username%>></input>
+                                        </td>
+                                        <td>
+                                            <input type="text" value=<%=users[i].email%>></input>
+                                        </td>
+                                        <td>
+                                            <input type="text" value=<%=users[i].role_id%>></input>
+                                        </td>
+                                    </tr>
+                                    <!-- Returns an error message if there are no available records -->
+                                    <% } } else { %>
+                                        <tr>
+                                            <td>There are no users in the table.</td>
+                                        </tr>
+                                        <% } %>
+                            </tbody>
+                        </table>
+                    </form>
+                    <!-- Calls a function that updates the database with changed records -->
+                    <button type="submit" onclick="submitChange()">Submit Changes</button>
+
+            </div>
+
+            <script src="/js/adminpanel.js"></script>
+            <%- include('../partials/footer.ejs') %>
+
+    </body>
+
+</html>
