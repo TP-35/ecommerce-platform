@@ -106,17 +106,6 @@ router.get("/updateuser/:username", adminAuth, async (req, res) => {
     res.render("admin/updateuser.ejs", { user : user });
 })
 
-router.post("/users/:username", adminAuth, async (req, res) => {
-    console.log("Req ", req.params.username);
-    console.log(req.body);
-    console.log("SOMETHING");
-    console.log("COOKIES " + req.cookies.token)
-
-    // Send this somewhere
-
-   // res.render("admin/updateuser.ejs", {username : req.body.username, password: req.body.password, email: req.body.password, role: req.body.role })
-})
-
 router.get("/admin", adminAuth, async (req, res) => {
     const [userResponse, productResponse] = await Promise.all([
         await fetch("http://localhost:3000/users", {

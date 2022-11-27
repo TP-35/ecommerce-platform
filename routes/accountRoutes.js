@@ -26,37 +26,44 @@ router.get("/users/:username", auth, async (req, res) => {
 })
 
 /* Update User route */
-router.patch("/users/:username", auth, async (req, res) => {
+router.post("/users/:username", auth, async (req, res) => {
     try {
         var username = req.params.username;
+
+        console.log("Body", req.body);
 
         const [rows] = await db.execute("SELECT user_id FROM user WHERE username=?", [username]);
         const user_id = rows[0].user_id;
 
-        var { username, password, email, role_id } = req.body;
+        var { username, password, email, role } = req.body;
 
         // Remove whitespace
         username = username?.trim() || "";
         password = password?.trim() || "";
         email = email?.trim() || "";
-        
-        if (role_id != 1 && role_id != 2) return res.status(400).send({ message: "You have inputted an incorrect role number." })
-        
+
+        console.log(role);
+
+        if (role != 1 && role != 2) return res.status(400).send({ message: "You have inputted an incorrect role id." })
+
         // Make sure form was filled
         if (!username && !password && !email) return res.status(400).send({ message: "Please fill the form." });
 
-        // Validate Password (Capital letter, number, special character, 8 characters)
-        const regex = /^(?=.*[A-Z])^(?=.*[0-9])(?=.*[\[\]£!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9\[\]£!@#\$%\^\&*\)\(+=._-]{8,}$/;
-        const result = regex.test(password);
-        if (!result) return res.status(400).send({ message: "Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character" });
+        if (password) {
+            // Validate Password (Capital letter, number, special character, 8 characters)
+            const regex = /^(?=.*[A-Z])^(?=.*[0-9])(?=.*[\[\]£!@#\$%\^\&*\)\(+=._-])[a-zA-Z0-9\[\]£!@#\$%\^\&*\)\(+=._-]{8,}$/;
+            const result = regex.test(password);
+            if (!result) return res.status(400).send({ message: "Password must be at least 8 characters long and contain at least 1 capital letter, 1 number and 1 special character" });
 
-        // Hash password
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        // Update database
-        await db.execute(`UPDATE user SET (username, password, email) values (?, ?, ?) WHERE user_id = ?;`, [username, hashedPassword, email, user_id]);
-
+            // Hash password
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            // Update database
+            await db.execute(`UPDATE user SET username=?, password=?, email=? WHERE user_id=?;`, [username, hashedPassword, email, user_id]);
+        } else {
+            console.log("Username " + username + " Email " + email + " User Id " + user_id);
+            await db.execute(`UPDATE user SET username=?, email=? WHERE user_id=?;`, [username, email, user_id]);
+        }
         return res.send();
     } catch (e) {
         console.log(e);

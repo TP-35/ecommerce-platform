@@ -39,23 +39,15 @@
                                         <input id="role" type="text" name="role" value="<%=user.role_id%>"></input>
                                     </td>
                                 </tr>
+                                    <table>
+                                        <%= user.message %>
+                                    </table>
                             </tbody>
                         </table>
                         <!-- Calls a function that updates the database with changed records -->
                         <button class="submit" style="float: right;" onclick="addUser()">Submit
                             Changes</button>
                     </form>
-                    <script>
-                        function addUser() {
-                            var name = document.getElementById("username").value;
-                            var password = document.getElementById("password").value;
-                            var email = document.getElementById("email").value;
-                            var role = document.getElementById("role").value;
-
-                           /* onUserUpdate(name, password, email, role); */
-
-                        }
-                    </script>
             </div>
 
             <script src="/js/adminpanel.js" type="text/javascript"></script>
