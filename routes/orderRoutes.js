@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const db = require("../db");
 const auth = require("../middleware/auth.js");
+const adminAuth = require("../middleware/adminauth.js");
 
 // Order with ID route
 router.get("/orders/:id", auth, async (req, res) => {
@@ -56,8 +57,31 @@ router.get("/orders/search/:user", auth, async (req, res) => {
     }
 })
 
-// Create a new Order route
-router.post("/orders/:id", auth, async (req, res) => {
+// List all Orders route (requires admin)
+router.get("/orders", adminAuth, async (req, res) => {
+    try {
+        // Searches for all orders, as well as pulling usernames from the user table
+        const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id");
+        const orders = orders_rows[0];
+
+        // Returns an effor if no orders can be found
+        if (!orders) return res.status(400).send({ message: "There are currently no orders." });
+
+        // All valid orders are added to the end of the array (even if there is only one, for consistency)
+        let orders_list = []
+        orders_rows.forEach(order => {
+            orders_list.push(order);
+        })
+
+        // Returns the list of orders + user details
+        return res.send(orders_list);
+    } catch (e) {
+        console.log(e);
+    }
+})
+
+// Create a new Order route (requires admin)
+router.post("/orders/:id", adminAuth, async (req, res) => {
     try {
         let { address, postcode, order_total } = req.body;
 
