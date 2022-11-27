@@ -1,0 +1,59 @@
+<html lang="en">
+
+<%- include('../partials/head.ejs', {title: "List Orders" , css: "/css/adminpanel.css" }) %>
+
+    <body>
+        <%- include('../partials/nav.ejs') %>
+            <div class="container">
+
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <table class="table">
+                        <!-- Sets header for table contents -->
+                        <thead>
+                            <tr>
+                                <th id="recent" scope="col">List Orders</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Order Date</th>
+                                <th scope="col">Order Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loops through orders and populates table -->
+                            <% if (orders.length) { for (var i=0; i < orders.length; i++) { %>
+                                <tr>
+                                    <td>
+                                        <%= orders[i].order_id%>
+                                    </td>
+                                    <td>
+                                        <%= orders[i].username%>
+                                    </td>
+                                    <td>
+                                        <%= orders[i].order_date%>
+                                    </td>
+                                    <td>
+                                        <%= orders[i].order_total%>
+                                    </td>
+                                </tr>
+                                <!-- Returns an error message if there are no available records  -->
+                                <% } } else { %>
+                                    <tr>
+                                        <td>There are no orders in the table.</td>
+                                    </tr>
+                                    <% } %>
+                        </tbody>
+                    </table>
+            </div>
+
+            <script src="/js/adminpanel.js"></script>
+            <%- include('../partials/footer.ejs') %>
+
+    </body>
+
+</html>
