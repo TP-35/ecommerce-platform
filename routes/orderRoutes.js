@@ -2,9 +2,10 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const db = require("../db");
+const auth = require("../middleware/auth.js");
 
 // Order with ID route
-router.get("/orders/:id", async (req, res) => {
+router.get("/orders/:id", auth, async (req, res) => {
     try {
         const order_id = req.params.id;
 
@@ -25,7 +26,7 @@ router.get("/orders/:id", async (req, res) => {
 })
 
 // List all Orders for User route
-router.get("/orders/search/:user", async (req, res) => {
+router.get("/orders/search/:user", auth, async (req, res) => {
     try {
         // Finds user from username
         const [user_rows] = await db.execute(`SELECT * FROM user WHERE username=?`, [req.params.user]);
@@ -56,24 +57,24 @@ router.get("/orders/search/:user", async (req, res) => {
 })
 
 // Create a new Order route
-router.post("/orders/:id", async (req, res) => {
+router.post("/orders/:id", auth, async (req, res) => {
     try {
         let { address, postcode, order_total } = req.body;
 
         address = address?.trim() || "";
         postcode = postcode?.trim() || "";
 
-        // Checks if all fields have been filled
-        if (!address || !postcode || !order_total)
-            return res.status(400).send("Please fill in the form.");
-
         // Checks if the order total is a valid float value
         if (isNaN(order_total))
             return res.status(400).send("The inputted order total must be a valid float value.");
 
+        // Checks if all fields have been filled
+        if (!address || !postcode || !order_total)
+            return res.status(400).send("Please fill in the form.");
+
         // Ensures the total is in correct format
         order_total = (Math.round(order_total * 100) / 100).toFixed(2);
-            
+
         // Validates postcode
         const postcode_regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
         const postcode_result = postcode_regex.test(postcode);

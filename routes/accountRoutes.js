@@ -2,13 +2,15 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const db = require("../db");
 const router = express.Router();
+const auth = require("../middleware/auth.js");
 
 /* Update user account
     todo verify user is logged in (auth middleware)
+    todo take username from token
     ? Change username or email 
 */
 
-router.patch("/:username", async (req, res) =>{
+router.patch("/:username", auth, async (req, res) =>{
     try{
         const {username} = req.params;
         let {password, confirmPassword} = req.body;
@@ -45,7 +47,7 @@ router.patch("/:username", async (req, res) =>{
 /*  Delete user account
     todo verify user is logged in (auth middleware)
 */
-router.delete("/:username",async (req, res) =>{
+router.delete("/:username", auth, async (req, res) =>{
     try{
         const {username} = req.params;
         // remove user from database

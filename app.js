@@ -1,5 +1,7 @@
 const express = require("express");
 const ejs = require("ejs");
+const cookieParser = require("cookie-parser");
+
 const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const accountRoutes = require("./routes/accountRoutes");
@@ -11,8 +13,10 @@ require("./db");
 
 // Setup Express
 const app = express();
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + "/public"));
 
 // Login/Signup Routes
 app.use("/", userRoutes);

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js -e js, ejs, css"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +17,7 @@
     "nodemon": "^2.0.20",
     "bcrypt": "^5.1.0",
     "email-validator": "^2.0.4",
-    "jsonwebtoken": "^8.5.1"
-  },
-  "dependencies": {
-
+    "jsonwebtoken": "^8.5.1",
+    "cookie-parser": "^1.4.6"
   }
 }
