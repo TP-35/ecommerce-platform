@@ -23,4 +23,12 @@ router.get("/signup", (req, res) =>{
     res.render("signup.ejs");
 })
 
+router.get("/account", (req, res) => {
+    res.render("account.ejs");
+})
+
+router.get("/changepassword", (req, res) => {
+    res.render("changePass.ejs");
+})
+
 module.exports = router;
