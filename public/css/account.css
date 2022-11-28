@@ -1,0 +1,37 @@
+
+h1{
+    text-align: center;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+#card{
+        color: #000000;
+        padding: 40px;
+      }  
+
+
+.form{
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+#cpform{
+    border: 0.2px solid #e4dcdc;
+    border-radius:1.5rem;
+   
+}
+
+#show{
+  font-size: 20px; 
+  text-align: center; 
+}
+div.button{
+    padding-top: 20px;
+
+}
+
+#message{
+    width: 250px;
+    padding-top: 10px;
+    color: #000000;
+}
