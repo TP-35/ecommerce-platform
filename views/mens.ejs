@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html lang ="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Kickstart Men</title>
-        <link rel="stylesheet" href="s.css">
-        <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css" >
-    </head>
-    <body>
-           
+    <%- include("./partials/head.ejs", {title: "Mens Clothing", css:"/css/index.css"}) %>
 
-            <div class="page">
-                <div class ="bannerhead">
-                    <div class="Section">
-                        <div class="row">
-                            <div class="col-5">
-                                <p><b>Free Standard Delivery <br> On Orders Over £70</b></p>
-                                <p><b>Online shopping 24/7 <br> With Contactless Delivery</b></p>
-                                <p><b>Lots Of Great Deals<br> More Than 50% Off</b></p>
-                            </div>
+    <body>
+        <%- include("./partials/nav.ejs", {token}) %>
+           
+        <div class="page">
+            <div class ="bannerhead">
+                <div class="Section">
+                    <div class="row">
+                        <div class="col-5">
+                            <p><b>Free Standard Delivery <br> On Orders Over £70</b></p>
+                            <p><b>Online shopping 24/7 <br> With Contactless Delivery</b></p>
+                            <p><b>Lots Of Great Deals<br> More Than 50% Off</b></p>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
 
         <div class = "Section">
 
             <div class="row row-2">
-                <h2>Womens</h2>
+                <h2>Mens</h2>
                 <select>
                     <option>Default Sorting</option>
                     <option>Sort Price</option>
-                    <option>Sort By Rating</option>
                 </select>
             </div>
 
@@ -76,7 +70,7 @@
                 </div>
                 <div class="col-4">
                     <img src="">
-                    <h4>shirt</h4>
+                    <h4>T-shirt</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>

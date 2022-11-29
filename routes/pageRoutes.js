@@ -19,6 +19,32 @@ router.get("/", async (req, res) => {
 
     res.render("index.ejs", { token });
 })
+router.get("/mens", async (req, res) => {
+    let token;
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+        } catch (e) {
+            token = null;
+        }
+    }
+
+    res.render("mens.ejs", { token });
+})
+router.get("/womens", async (req, res) => {
+    let token;
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+        } catch (e) {
+            token = null;
+        }
+    }
+
+    res.render("womens.ejs", { token });
+})
 
 router.get("/aboutus", async (req, res) => {
     let token;

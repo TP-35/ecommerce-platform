@@ -37,33 +37,3 @@ text-align: center;
 .error-message{
     color: red;
 }
-/* 
-#button {
-  cursor: pointer;
-  display: block;
-  margin: auto;
-  margin-top: 20px;
-  color: rgb(255, 255, 255);
-  background-color: #6759ff;
-  border: 0;
-  border-radius: 5px;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom: 10px;
-  padding-top: 5px;
-  font-size: 20px;
-}
-
-#button.submit:hover {
-    background-color: #6759ffc2;   
-}
-
-.button#button {
-width: 250px;
-text-decoration: none;
-}
-
-.button#button:hover {
-    background-color: #6759ffc2; 
-    text-decoration: none;
-} */
