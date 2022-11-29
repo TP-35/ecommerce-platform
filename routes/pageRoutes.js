@@ -54,7 +54,7 @@ router.get("/login", async (req, res) => {
     if (req.cookies.token) {
         try {
             token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            return res.render("/", { token });
+            //return res.render("/", { token });
         } catch (e) {
             token = null;
         }
@@ -68,7 +68,7 @@ router.get("/signup", async (req, res) => {
     if (req.cookies.token) {
         try {
             token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            return res.render("/", { token });
+            //return res.render("/", { token });
         } catch (e) {
             token = null;
         }
