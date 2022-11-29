@@ -1,7 +1,8 @@
 <html lang="en">
     <%- include('./partials/head.ejs', {title: "Change Password", css:"/css/account.css"}) %>
 <body>
-  <%- include('./partials/nav.ejs') %>
+  <%- include('./partials/nav.ejs', {token}) %>
+
 
     <h1>Change Password</h1>
    
@@ -26,7 +27,7 @@
 </div>
 <!-- Button (Double) -->
 <div class="button">
-    <a href="account.html" class="btn btn-primary">Go Back</a>
+    <a href="/account" class="btn btn-primary">Go Back</a>
     <button  type="submit" name="Change" class="btn btn-success">Change Password</button>
   </div>
 </div>

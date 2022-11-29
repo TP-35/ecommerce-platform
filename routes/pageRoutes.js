@@ -80,14 +80,35 @@ router.get("/logout", (req, res) =>{
     res.redirect("/");
 })
 
+router.get("/account", async (req, res) => {
+    let token;
 
-router.get("/account", (req, res) => {
-    res.render("account.ejs");
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+            return res.render("/", { token });
+        } catch (e) {
+            token = null;
+        }
+    }
+    res.render("account.ejs", { token });
 })
 
-router.get("/changepassword", (req, res) => {
-    res.render("changePass.ejs");
+router.get("/changepassword", async (req, res) => {
+    let token;
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+            return res.render("/", { token });
+        } catch (e) {
+            token = null;
+        }
+    }
+    res.render("changePass.ejs", { token });
 })
+
+
 
 module.exports = router;
 

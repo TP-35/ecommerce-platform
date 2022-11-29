@@ -2,7 +2,8 @@
     <%- include('./partials/head.ejs', {title: "Account page", css:"/css/account.css"}) %>
 
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/nav.ejs', {token}) %>
+
     <h1>Account page</h1>
     <section id="card">
     <div class="container">
@@ -61,7 +62,7 @@
                                 <div class="col-sm-3"></div>
                                      <div class="col-sm-9 text-secondary">
                                         <input type="submit" class="btn btn-danger px-4" value="Delete Account">
-                                        <a href="editAccount.html" class="btn btn-success px-4">Change password</a>
+                                        <a href="/changepassword" class="btn btn-success px-4">Change password</a>
                                     </div>
                                 </div>
                             </div>
