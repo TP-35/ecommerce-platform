@@ -1,6 +1,7 @@
 const express = require("express");
 const ejs = require("ejs");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
 const userRoutes = require("./routes/userRoutes");
 const pageRoutes = require("./routes/pageRoutes");
@@ -17,13 +18,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
-
+app.use(bodyParser.urlencoded({ extended: true }));
 // Login/Signup Routes
 app.use("/", userRoutes);
 // Renders pages 
 app.use("/", pageRoutes);
 // Manages accounts
-app.use("/account", accountRoutes);
+app.use("/", accountRoutes);
 // Order Route
 app.use("/", orderRoutes);
 // Product Route

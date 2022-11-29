@@ -1,0 +1,101 @@
+<html lang="en">
+
+<%- include('../partials/head.ejs', {title: "Admin Panel" , css: "/css/adminpanel.css" }) %>
+
+    <body>
+        <%- include('../partials/nav.ejs') %>
+            <div class="container">
+
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <div class="flex-content">
+                        <div class="flex-col">
+                            <table class="table">
+                                <!-- Set headers for table contents -->
+                                <thead>
+                                    <tr>
+                                        <th id="recent" scope="col">Recent Users</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loops through users and populates table -->
+                                    <% if (users.length) { for (var i=0; i < users.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <%= users[i].user_id%>
+                                            </td>
+                                            <td>
+                                                <%= users[i].username%>
+                                            </td>
+                                            <td>
+                                                <%= users[i].email%>
+                                            </td>
+                                        </tr>
+                                        <!-- Returns an error message if there are no available records -->
+                                        <% } } else { %>
+                                            <table>
+                                                <%= users.message %>
+                                            </table>
+                                            <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex-col">
+                            <table class="table">
+                                <!-- Sets header for table contents -->
+                                <thead>
+                                    <tr>
+                                        <th id="recent" scope="col">Recent Products</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loops through products and populates table -->
+                                    <% if (products.length) { for (var i=0; i < products.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <%= products[i].product_id%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].name%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].description%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].category%>
+                                            </td>
+                                        </tr>
+                                        <!-- Returns an error message if there are no available records -->
+                                        <% } } else { %>
+                                            <table>
+                                                <%= products.message%>
+                                            </table>
+                                            <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+
+            <script src="/js/adminpanel.js"></script>
+            <%- include('../partials/footer.ejs') %>
+
+    </body>
+
+</html>
