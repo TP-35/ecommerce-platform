@@ -1,0 +1,69 @@
+<html lang="en">
+
+<%- include('../partials/head.ejs', {title: "List User Orders" , css: "/css/adminpanel.css" }) %>
+
+    <body>
+        <%- include('../partials/nav.ejs') %>
+            <div class="container">
+
+                <%- include('../partials/sidebar.ejs') %>
+
+                    <table class="table">
+                        <!-- Sets header for table contents -->
+                        <thead>
+                            <tr>
+                                <th id="recent" scope="col">List Order Products</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">Shipping Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loops through products and populates table -->
+                            <% if (products.length) { for (var i=0; i < products.length; i++) { %>
+                                <tr>
+                                    <td>
+                                        <%= orders[i].order_id%>
+                                    </td>
+                                    <td>
+                                        <%= products[i].name%>
+                                    </td>
+                                    <td>
+                                        <%= products[i].description%>
+                                    </td>
+                                    <td>
+                                        <%= products[i].category%>
+                                    </td>
+                                    <td>
+                                        <%= products[i].cost%>
+                                    </td>
+                                    <td>
+                                        <%= products[i].shipping_cost%>
+                                    </td>
+                                </tr>
+                                <!-- Returns an error message if there are no available records  -->
+                                <% } } else { %>
+                                    <table>
+                                        <%= products.message %>
+                                    </table>
+                                    <% } %>
+                        </tbody>
+                    </table>
+            </div>
+
+            <script src="/js/adminpanel.js"></script>
+            <%- include('../partials/footer.ejs') %>
+
+    </body>
+
+</html>

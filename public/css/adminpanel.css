@@ -1,0 +1,138 @@
+/* Styles the layout for the sidebar that can be seen across admin pages */
+.sidebar {
+    height: 100%;
+    width: 13%;
+    /*Ensures bar is always on left*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #25323a;
+    padding-top: 20px;
+    flex: 1;
+}
+
+.sidebar a,
+.dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #adadad;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    font-family: "Lato", sans-serif;
+}
+
+.dropdown-btn {
+    line-height: 30px;
+}
+
+.sidebar a:hover,
+.dropdown-btn:hover {
+    color: #ffffff;
+}
+
+#main {
+    margin-left: 160px;
+    font-size: 16px;
+}
+
+.active {
+    color: white;
+    background-color: #407a95;
+}
+
+.dropdown-container {
+    display: none;
+    background-color: #2d3e46;
+}
+
+@media (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 16px;
+    }
+}
+
+/* Side bar is removed if the screen is too small, to avoid overlap */
+@media (max-width: 840px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+/* Flex container for dynamic resizing */
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+}
+
+/* Uses flex boxes for dynamic resizing */
+.flex-col {
+    margin: 0 15px 15px;
+    width: 100%;
+}
+
+@media (max-width: 1300px) {
+    .flex-col {
+        width: 80%
+    }
+}
+
+.flex-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    margin-top: 5%;
+    max-width: 100%;
+}
+
+/* Styles the tables where data is populated for admin viewing */
+.table {
+    table-layout: auto;
+    word-break: break-all;
+    border-collapse: collapse;
+    border: 1px solid rgb(226, 226, 226);
+}
+
+.table #recent {
+    font-size: 15px;
+}
+
+thead {
+    background-color: rgb(244, 241, 241);
+}
+
+.flex-col p {
+    color: black;
+    font-weight: 600;
+    margin-bottom: -1px;
+}
+
+/* Styles the submit button to match across the website */
+#button {
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    color: rgb(255, 255, 255);
+    background-color: #6759ff;
+    border: 0;
+    border-radius: 5px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    font-size: 20px;
+  }
