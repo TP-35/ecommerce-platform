@@ -30,11 +30,12 @@
                                         <%= users[i].user_id%>
                                     </td>
                                     <td>
+                                        <!-- Allows the name to be clicked to redirect the user -->
                                         <script type="text/javascript">
                                             var name = "<%= users[i].username%>";
                                             document.write('<a href="updateuser/' + name + '"><%= users[i].username%> </a>');
-                                            </script>
-                                            </a>
+                                        </script>
+                                        </a>
                                     </td>
                                     <td>
                                         <%= users[i].email%>

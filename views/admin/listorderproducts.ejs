@@ -1,6 +1,6 @@
 <html lang="en">
 
-<%- include('../partials/head.ejs', {title: "List Products" , css: "/css/adminpanel.css" }) %>
+<%- include('../partials/head.ejs', {title: "List User Orders" , css: "/css/adminpanel.css" }) %>
 
     <body>
         <%- include('../partials/nav.ejs') %>
@@ -9,11 +9,10 @@
                 <%- include('../partials/sidebar.ejs') %>
 
                     <table class="table">
-                        <!-- Set headers for table contents -->
+                        <!-- Sets header for table contents -->
                         <thead>
                             <tr>
-                                <th id="recent" scope="col">List Products</th>
-                                <th scope="col"></th>
+                                <th id="recent" scope="col">List Order Products</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
@@ -21,13 +20,12 @@
                                 <th scope="col"></th>
                             </tr>
                             <tr>
+                                <th scope="col">Order ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Cost</th>
                                 <th scope="col">Shipping Cost</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Stock</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,11 +33,10 @@
                             <% if (products.length) { for (var i=0; i < products.length; i++) { %>
                                 <tr>
                                     <td>
-                                        <!-- Allows the name to be clicked to redirect the user -->
-                                        <script type="text/javascript">
-                                            var name = "<%= products[i].product_id%>";
-                                            document.write('<a href="updateproduct/' + name + '"><%= products[i].name%> </a>');
-                                        </script>
+                                        <%= orders[i].order_id%>
+                                    </td>
+                                    <td>
+                                        <%= products[i].name%>
                                     </td>
                                     <td>
                                         <%= products[i].description%>
@@ -53,14 +50,8 @@
                                     <td>
                                         <%= products[i].shipping_cost%>
                                     </td>
-                                    <td>
-                                        <%= products[i].image%>
-                                    </td>
-                                    <td>
-                                        <%= products[i].quantity%>
-                                    </td>
                                 </tr>
-                                <!-- Returns an error message if there are no available records -->
+                                <!-- Returns an error message if there are no available records  -->
                                 <% } } else { %>
                                     <table>
                                         <%= products.message %>

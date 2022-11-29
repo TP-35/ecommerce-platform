@@ -32,7 +32,11 @@
                                         <%= orders[i].order_id%>
                                     </td>
                                     <td>
-                                        <%= orders[i].username%>
+                                        <!-- Allows the name to be clicked to redirect the user -->
+                                        <script type="text/javascript">
+                                            var name = "<%= orders[i].user_id%>";
+                                            document.write('<a href="listorderproducts/' + name + '"><%= orders[i].username%> </a>');
+                                        </script>
                                     </td>
                                     <td>
                                         <%= orders[i].order_date%>
