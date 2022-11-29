@@ -6,7 +6,7 @@
     margin: 0;
 }
 body{
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif; /* Font used for description and title */
     display: grid;
     background-color: #f4f4f4;
     align-content: center;
@@ -25,14 +25,14 @@ section{
     align-items: center;
     justify-content: center;
 }
-.content{
+.content{    /* Positioning and background colour for content box*/
     background: #fff;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
-.content h2{
+.content h2{    /* Positioning, font size and details of About Us title */
     text-transform: uppercase;
     font-size: 36px;
     letter-spacing: 6px;
@@ -56,7 +56,7 @@ section{
 .links{
     margin: px 0;
 }
-.links li {
+.links li {    /* Style for contact button including colour*/
     border: 0.5px solid #0d6efd;
     background-color: #0d6efd;
     list-style: none;
@@ -97,6 +97,6 @@ section{
     opacity: 0.8;
     text-decoration: none;
 }
-.icons li a:hover{
+.icons li a:hover{    /* Colour changes to blue when hovering over social media icon*/
     color: #0d6efd;
 }
