@@ -2,8 +2,6 @@ const express = require("express");
 const router = express.Router();
 const ejs = require("ejs");
 const jwt = require("jsonwebtoken");
-const fetch = require("node-fetch");
-const adminAuth = require("../middleware/adminauth.js");
 
 //todo Render each page
 router.get("/", async (req, res) => {
@@ -81,6 +79,39 @@ router.get("/logout", (req, res) =>{
     res.clearCookie("token");
     res.redirect("/");
 })
+
+router.get("/account", async (req, res) => {
+    let token;
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+            return res.render("/", { token });
+        } catch (e) {
+            token = null;
+        }
+    }
+    res.render("account.ejs", { token });
+})
+
+router.get("/changepassword", async (req, res) => {
+    let token;
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+            return res.render("/", { token });
+        } catch (e) {
+            token = null;
+        }
+    }
+    res.render("changePass.ejs", { token });
+})
+
+
+
+module.exports = router;
+
 
 // Lists all available orders (uses input from orders route)
 router.get("/listorders", adminAuth, async (req, res) => {
@@ -207,3 +238,4 @@ router.get("/admin", adminAuth, async (req, res) => {
 })
 
 module.exports = router;
+
