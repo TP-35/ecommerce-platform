@@ -2,7 +2,7 @@
 <%- include('./partials/head.ejs', {title: "Signup", css:"/css/login.css"}) %> 
 
 <body id="main">   
-    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/nav.ejs', {token}) %>
     <p id="title">Sign Up</p>  
     <div id="register"> 
         <form method="POST" onsubmit="onSignup(event)">
@@ -15,7 +15,8 @@
             <input class = "textbox" type="text" name="city" placeholder="City" required>
             <input class = "textbox" type="text" name="postcode" placeholder="Postcode" required>
 
-            <button id="button" class = "submit" name="submit">Sign up</button>
+            <button id="button" class="btn btn-primary" name="submit">Sign up</button>
+            <br>
             <p1 id="create">Already have an account?</p1>
             <a class="button" id="button" href="/login" target="_parent">Login</a>
         </form>   
