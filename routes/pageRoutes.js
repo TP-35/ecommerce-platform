@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
         }
     }
 
-    res.render("index.ejs", { token });
+    res.render("index.ejs", { token: token });
 })
 
 router.get("/aboutus", async (req, res) => {
@@ -31,7 +31,7 @@ router.get("/aboutus", async (req, res) => {
         }
     }
 
-    res.render("aboutus.ejs", { token });
+    res.render("aboutus.ejs", { token: token });
 })
 
 router.get("/contactus", async (req, res) => {
@@ -45,7 +45,7 @@ router.get("/contactus", async (req, res) => {
         }
     }
 
-    res.render("contactus.ejs", { token });
+    res.render("contactus.ejs", { token: token });
 })
 
 router.get("/login", async (req, res) => {
@@ -59,7 +59,7 @@ router.get("/login", async (req, res) => {
             token = null;
         }
     }
-    res.render("login.ejs", { token });
+    res.render("login.ejs", { token: token });
 })
 
 router.get("/signup", async (req, res) => {
@@ -74,7 +74,7 @@ router.get("/signup", async (req, res) => {
         }
     }
 
-    res.render("signup.ejs", { token });
+    res.render("signup.ejs", { token: token });
 })
 
 router.get("/logout", (req, res) =>{
@@ -95,7 +95,7 @@ router.get("/listorders", adminAuth, async (req, res) => {
 
     const orders = await orderResponse.json();
 
-    res.render("admin/listorders.ejs", { orders: orders.orders, products: orders.products });
+    res.render("admin/listorders.ejs", { token: req.cookies.token, orders: orders.orders, products: orders.products });
 })
 
 // Lists all available products (uses input from products route)
@@ -112,7 +112,7 @@ router.get("/listproducts", adminAuth, async (req, res) => {
     const products = await productResponse.json();
 
 
-    res.render("admin/listproducts.ejs", { products: products });
+    res.render("admin/listproducts.ejs", { token: req.cookies.token, products: products });
 })
 
 // Lists all available users (uses input frm users route)
@@ -127,7 +127,7 @@ router.get("/listusers", adminAuth, async (req, res) => {
     ]);
 
     const users = await userResponse.json();
-    res.render("admin/listusers.ejs", { users: users });
+    res.render("admin/listusers.ejs", { token: req.cookies.token, users: users });
 })
 
 // Renders the update user page, which will take a username as an input
@@ -142,12 +142,12 @@ router.get("/updateuser/:username", adminAuth, async (req, res) => {
     ])
 
     const user = await userResponse.json();
-    res.render("admin/updateuser.ejs", { user : user });
+    res.render("admin/updateuser.ejs", { token: req.cookies.token, user : user });
 })
 
 // Renders the add product page
 router.get("/addproduct", adminAuth, async (req, res) => {
-    res.render("admin/addproduct.ejs");
+    res.render("admin/addproduct.ejs", { token: req.cookies.token });
 })
 
 // Renders the update product page, which will take a product id as an input
@@ -163,7 +163,7 @@ router.get("/updateproduct/:id", adminAuth, async (req, res) => {
 
     const product = await productResponse.json();
 
-    res.render("admin/updateproduct.ejs", { product : product });
+    res.render("admin/updateproduct.ejs", { token: req.cookies.token, product : product });
 })
 
 // Renders the order products page, taking the id of the user as input 
@@ -180,7 +180,7 @@ router.get("/listorderproducts/:id", adminAuth, async (req, res) => {
 
     const orders = await orderResponse.json();
 
-    res.render("admin/listorderproducts.ejs", { orders : orders.orders, products: orders.products });
+    res.render("admin/listorderproducts.ejs", { token: req.cookies.token, orders : orders.orders, products: orders.products });
 })
 
 // Renders the admin page (uses input from users and products)
@@ -203,7 +203,7 @@ router.get("/admin", adminAuth, async (req, res) => {
     const users = await userResponse.json();
     const products = await productResponse.json();
 
-    res.render("admin/adminpanel.ejs", { users: users, products: products });
+    res.render("admin/adminpanel.ejs", { token: req.cookies.token, users: users, products: products });
 })
 
 module.exports = router;
