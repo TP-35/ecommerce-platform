@@ -1,12 +1,3 @@
-/*css for the display of logo*/
-#logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-    height: 200px;
-}
-
 /*css for the 'contact us' label*/
 .ContactUs {
     text-align: center;
@@ -27,16 +18,6 @@
     text-align: center;
 }
 
-/*css for the submit button*/
-input[type=submit] {
-    background-color: #6759ff;;
-    color: white;
-    cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 /*css for the textboxes*/
 input[type=text], select, textarea {
     width: 100%;
@@ -47,37 +28,4 @@ input[type=text], select, textarea {
     margin-bottom: 35px;
     resize:vertical;
     text-align: left;
-}
-
-/*css for the social media buttons*/
-.fa {
-    padding: 20px;
-    font-size: 30px;
-    width: 20px;
-    text-align: center;
-    text-decoration: none;
-    border-radius:50%;
-}
-
-/*css for the facebook button*/
-.fa-facebook {
-    background: #3b5998;
-    color: white;
-}
-
-/*css for the Twitter button*/
-.fa-twitter {
-    background: #55acee;
-    color:white;
-}
-
-/*css for the instagram button*/
-.fa-instagram {
-    background: #88127e;
-    color:white;
-}
-
-/*css for the social media class*/
-.socialMedia {
-    text-align: center;
 }

@@ -37,7 +37,7 @@ text-align: center;
 .error-message{
     color: red;
 }
-
+/* 
 #button {
   cursor: pointer;
   display: block;
@@ -66,4 +66,4 @@ text-decoration: none;
 .button#button:hover {
     background-color: #6759ffc2; 
     text-decoration: none;
-}
+} */

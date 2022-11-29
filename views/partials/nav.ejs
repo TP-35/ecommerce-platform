@@ -1,4 +1,52 @@
 <nav>
     <!--Navbar code goes here-->
-    
+    <ul class="nav-list">
+        <a href="/" id="logo"><img src="/images/kslogo.png" height="50px" width="50px"></img></a>
+
+        <div class="mobile" id="hamburger">
+            <img src="/images/menu-icon.svg" width="35px">
+        </div>
+        
+
+        <div class="list-container">
+            <li class="nav-item"><a href="/">Mens</a></li>
+            <li class="nav-item"><a href="/">Womens</a></li>
+        </div>
+        
+        <div class="list-container">
+            <li class="nav-item"><a href="/aboutus">About Us</a></li>
+            <li class="nav-item"><a href="/contactus">Contact Us</a></li>
+
+            <!--Dropdown menu. Displays on Desktop and Laptop devices-->
+            <div class="dropdown">
+                <svg class="account-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/>
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4z"/>
+                </svg>  
+                <div class="dropdown-content">
+                    <% if (token) { %>
+                        <li class="nav-item"><a href="/">My Account</a></li>
+                        <li class="nav-item"><a href="/">My Orders</a></li>
+                        <li class="nav-item"><a href="/">Wishlist</a></li>
+                        <li class="nav-item"><a href="/logout">Logout</a></li>
+                    <% } else { %>
+                        <li class="nav-item"><a href="/login">Log-In</a></li>
+                        <li class="nav-item"><a href="/signup">Sign Up</a></li>
+                    <%}%>
+                </div>      
+            </div>
+        </div>
+        <!--Displays on mobile devices-->
+        <div class="list-container mobile">
+            <% if (token) { %>
+                <li class="nav-item"><a href="/">My Account</a></li>
+                <li class="nav-item"><a href="/">My Orders</a></li>
+                <li class="nav-item"><a href="/">Wishlist</a></li>
+                <li class="nav-item"><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <li class="nav-item"><a href="/login">Log-In</a></li>
+                <li class="nav-item"><a href="/signup">Sign Up</a></li>
+            <%}%>
+        </div>
+    </ul>
+    <script src="/js/nav.js"></script>
 </nav>
