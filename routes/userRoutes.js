@@ -53,7 +53,7 @@ router.post("/signup", async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         // Save user to database
-        const user = await db.execute(`INSERT INTO user (email, username, password) VALUES (?, ?, ?);`, [email, username, hashedPassword]);
+        const user = await db.execute(`INSERT INTO user (email, username, password, role_id) VALUES (?, ?, ?, ?);`, [email, username, hashedPassword, 1]);
         const userid = user[0].insertId;
         // Save address to database
         await db.execute(`INSERT INTO address (user_id, city, postcode, address) VALUES (?, ?, ?, ?)`, [userid, city, postcode, address]);

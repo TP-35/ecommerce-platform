@@ -28,26 +28,26 @@ router.get("/users/:username", auth, async (req, res) => {
 /* Update User route */
 router.post("/users/:username", auth, async (req, res) => {
     try {
-        var username = req.params.username;
+        var oldUsername = req.body.oldUsername;
 
-        console.log("Body", req.body);
-
-        const [rows] = await db.execute("SELECT user_id FROM user WHERE username=?", [username]);
+        const [rows] = await db.execute("SELECT user_id FROM user WHERE username=?", [oldUsername]);
         const user_id = rows[0].user_id;
 
-        var { username, password, email, role } = req.body;
+        var { newUsername, password, email, role } = req.body;
 
         // Remove whitespace
-        username = username?.trim() || "";
+        newUsername = newUsername?.trim() || "";
         password = password?.trim() || "";
         email = email?.trim() || "";
 
-        console.log(role);
-
+        // Validate bases to ensure query can be made
         if (role != 1 && role != 2) return res.status(400).send({ message: "You have inputted an incorrect role id." })
+        if (!newUsername) return res.status(400).send({ message: "You can not use a blank name." });
+
+        if (oldUsername == req.token.user.username) return res.status(400).send({ message: "You can not edit an account you are logged into. "})
 
         // Make sure form was filled
-        if (!username && !password && !email) return res.status(400).send({ message: "Please fill the form." });
+        if (!newUsername && !password && !email) return res.status(400).send({ message: "Please fill in the form." });
 
         if (password) {
             // Validate Password (Capital letter, number, special character, 8 characters)
@@ -59,12 +59,12 @@ router.post("/users/:username", auth, async (req, res) => {
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltRounds);
             // Update database
-            await db.execute(`UPDATE user SET username=?, password=?, email=? WHERE user_id=?;`, [username, hashedPassword, email, user_id]);
+            var [new_user_rows] = await db.execute(`UPDATE user SET username=?, password=?, email=? WHERE user_id=?;`, [newUsername, hashedPassword, email, user_id]);
         } else {
-            console.log("Username " + username + " Email " + email + " User Id " + user_id);
-            await db.execute(`UPDATE user SET username=?, email=? WHERE user_id=?;`, [username, email, user_id]);
+            var [new_user_rows] = await db.execute(`UPDATE user SET username=?, email=? WHERE user_id=?;`, [newUsername, email, user_id]);
         }
-        return res.send();
+        const new_user = new_user_rows[0];
+        res.status(200).send( {user : new_user });
     } catch (e) {
         console.log(e);
         res.status(500).send(e);
