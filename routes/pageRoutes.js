@@ -74,4 +74,9 @@ router.get("/signup", async (req, res) => {
     res.render("signup.ejs", { token });
 })
 
+router.get("/logout", (req, res) =>{
+    res.clearCookie("token");
+    res.redirect("/");
+})
+
 module.exports = router;

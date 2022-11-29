@@ -1,12 +1,3 @@
-/*css for the display of logo*/
-#logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-    height: 200px;
-}
-
 /*css for the 'contact us' label*/
 .ContactUs {
     text-align: center;
