@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ejs = require("ejs");
 const jwt = require("jsonwebtoken");
+const adminAuth = require("../middleware/adminauth");
 
 //todo Render each page
 router.get("/", async (req, res) => {
@@ -78,7 +79,7 @@ router.get("/login", async (req, res) => {
     if (req.cookies.token) {
         try {
             token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            //return res.render("/", { token });
+            return res.redirect("/");
         } catch (e) {
             token = null;
         }
@@ -92,7 +93,7 @@ router.get("/signup", async (req, res) => {
     if (req.cookies.token) {
         try {
             token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            //return res.render("/", { token });
+            return res.redirect("/");
         } catch (e) {
             token = null;
         }
@@ -106,18 +107,17 @@ router.get("/logout", (req, res) =>{
     res.redirect("/");
 })
 
-router.get("/account", async (req, res) => {
+router.get("/myaccount", async (req, res) => {
     let token;
 
     if (req.cookies.token) {
         try {
             token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            return res.render("/", { token });
+            res.render("account.ejs", { token });
         } catch (e) {
             token = null;
         }
     }
-    res.render("account.ejs", { token });
 })
 
 router.get("/changepassword", async (req, res) => {
@@ -126,12 +126,12 @@ router.get("/changepassword", async (req, res) => {
     if (req.cookies.token) {
         try {
             token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            return res.render("/", { token });
+            return res.render("changePass.ejs", { token });
         } catch (e) {
             token = null;
         }
     }
-    res.render("changePass.ejs", { token });
+    return res.redirect("/");
 })
 
 

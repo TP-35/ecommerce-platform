@@ -1,5 +1,5 @@
 <html lang="en">
-    <%- include('./partials/head.ejs', {title: "Account page", css:"/css/account.css"}) %>
+    <%- include('./partials/head.ejs', {title: "My Account", css:"/css/account.css"}) %>
 
 <body>
     <%- include('./partials/nav.ejs', {token}) %>
@@ -17,7 +17,16 @@
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="" disabled >
+                                    <input id="full-name" type="text" class="form-control" value="" disabled >
+                                </div>
+                            </div>
+                            <!--Section for post code -->
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Username</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input id="username" type="text" class="form-control" value="" disabled>
                                 </div>
                             </div>
                              <!--Section for email-->
@@ -26,7 +35,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input id="email" type="text" class="form-control" value="" disabled>
                                 </div>
                             </div>
                              <!--Section for city-->
@@ -35,7 +44,7 @@
                                     <h6 class="mb-0">City</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input id="city" type="text" class="form-control" value="" disabled>
                                 </div>
                               
                             </div>
@@ -45,7 +54,7 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="" disabled>
+                                    <input id="address" type="text" class="form-control" value="" disabled>
                                 </div>
                             </div>
                               <!--Section for post code -->
@@ -54,14 +63,15 @@
                                     <h6 class="mb-0">Postcode</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" value="" disabled>
-                                </div>
+                                    <input id="postcode" type="text" class="form-control" value="" disabled>
                             </div>
+                            </div>
+                            <p class="error-message" id="error-message" style="display: none;">Internal Server Error. Account not deleted, please try again later!</p>
                              <!--Buttons-->
                                 <div class="row">
                                 <div class="col-sm-3"></div>
                                      <div class="col-sm-9 text-secondary">
-                                        <input type="submit" class="btn btn-danger px-4" value="Delete Account">
+                                        <button onclick="onDelete()" class="btn btn-danger px-4">Delete Account</button>
                                         <a href="/changepassword" class="btn btn-success px-4">Change password</a>
                                     </div>
                                 </div>
@@ -73,7 +83,6 @@
         </div>
     </section>
         <%- include('./partials/footer.ejs') %>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+        <script src="/js/myAccount.js"></script>
 </body>
 </html>

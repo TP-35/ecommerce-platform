@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
         // Save address to database
         await db.execute(`INSERT INTO address (user_id, city, postcode, address) VALUES (?, ?, ?, ?)`, [userid, city, postcode, address]);
         //Create web token 
-        const token = await jwt.sign({ user: { username: username, email: email, role: 1 } }, process.env.SECRET, { expiresIn: '1d' });
+        const token = await jwt.sign({ user: { userid: userid, username: username, email: email, role: 1 } }, process.env.SECRET, { expiresIn: '1d' });
         // redirect to homepage
         res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         return res.send({ token });
@@ -89,7 +89,7 @@ router.post("/login", async (req, res) => {
         }
 
         // Create web token
-        const token = await jwt.sign({ user: { username: user.username, email: user.email, role: user.role_id } }, process.env.SECRET, { expiresIn: '1d' });
+        const token = await jwt.sign({ user: { userid: user.user_id, username: user.username, email: user.email, role: user.role_id } }, process.env.SECRET, { expiresIn: '1d' });
         // redirect to homepage
         res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.send({ token });
