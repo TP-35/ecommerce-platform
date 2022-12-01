@@ -1,3 +1,4 @@
+const fullname = document.getElementById("full-name");
 const email = document.getElementById("email");
 const city = document.getElementById("city");
 const address = document.getElementById("address");
@@ -7,7 +8,8 @@ const postcode = document.getElementById("postcode");
     try{
         const res = await fetch("/users");
         const data = await res.json();
-        //todo full name
+        
+        fullname.value = data.fullname;
         email.value = data.email;
         city.value = data.city;
         address.value = data.address;
