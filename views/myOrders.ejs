@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!--Import the stylesheet for the page-->
-    <link rel="stylesheet" href="myOrders.css">
-</head>
-<body style="background-color:#f4f0e4">
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<html>
+<%- include("./partials/head.ejs", {title: "My Orders", css:"/css/MyOrders.css"}) %>
+
+<body>
+    <%- include("./partials/nav.ejs", {token}) %>
+
+    <%=orders%>
 <!--Label to signify its the 'My Orders' page-->
 <div class="MyOrders">
     <h1>My Orders:</h1>

@@ -3,8 +3,10 @@ const router = express.Router();
 const ejs = require("ejs");
 const jwt = require("jsonwebtoken");
 const adminAuth = require("../middleware/adminauth");
+const db = require("../db.js");
+const auth = require("../middleware/auth")
 
-//todo Render each page
+// Home page
 router.get("/", async (req, res) => {
     let token;
 
@@ -16,8 +18,60 @@ router.get("/", async (req, res) => {
         }
     }
 
-    res.render("index.ejs", { token: token });
+    // fetch products
+    const [products_rows] = await db.execute(`SELECT * FROM product tb1
+    JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
+    WHERE tb2.quantity > 0 ORDER BY product_id;`);
+    const products = products_rows.slice(0, 3);
+
+    res.render("index.ejs", { token, products});
 })
+
+// Page for individual products
+router.get("/product/:id", async (req, res) =>{
+    let token;
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+        } catch (e) {
+            token = null;
+        }
+    }
+
+    // query product info
+    let product = await db.execute(`SELECT * FROM product WHERE product_id = ?;`, [req.params.id]);
+    product = product[0][0];
+    //todo if no product render 404
+    // query more products
+    const [products_rows] = await db.execute(`SELECT * FROM product tb1
+    JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
+    WHERE tb2.quantity > 0 ORDER BY product_id;`);
+    const moreProducts = products_rows.slice(0, 3);
+
+
+    return res.render("ProductUpClose.ejs", { token, product, moreProducts });
+})
+
+// Checkout page for individual product
+//todo implement basket?
+router.get("/checkout/:id", async (req, res) =>{
+    // query product info
+    let product = await db.execute(`SELECT * FROM product WHERE product_id = ?;`, [req.params.id]);
+    product = product[0][0];
+
+    if (req.cookies.token) {
+        try {
+            token = await jwt.verify(req.cookies.token, process.env.SECRET);
+        } catch (e) {
+            token = null;
+        }
+    }
+
+    return res.render("checkout.ejs", {token, product})
+})
+
+// Page for mens clothing
 router.get("/mens", async (req, res) => {
     let token;
 
@@ -29,8 +83,16 @@ router.get("/mens", async (req, res) => {
         }
     }
 
-    res.render("mens.ejs", { token });
+    // fetch products
+    const [products_rows] = await db.execute(`SELECT * FROM product tb1
+    JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
+    WHERE tb2.quantity > 0 AND tb1.gender = "male" ORDER BY product_id;`);
+    const products = products_rows;
+
+    res.render("mens.ejs", { token, products});
 })
+
+// Page for womens clothing
 router.get("/womens", async (req, res) => {
     let token;
 
@@ -42,9 +104,15 @@ router.get("/womens", async (req, res) => {
         }
     }
 
-    res.render("womens.ejs", { token });
+    const [products_rows] = await db.execute(`SELECT * FROM product tb1
+    JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
+    WHERE tb2.quantity > 0 AND tb1.gender = "female" ORDER BY product_id;`);
+    const products = products_rows;
+
+    res.render("womens.ejs", { token, products });
 })
 
+// About us page
 router.get("/aboutus", async (req, res) => {
     let token;
 
@@ -59,6 +127,7 @@ router.get("/aboutus", async (req, res) => {
     res.render("aboutus.ejs", { token: token });
 })
 
+// Contact us page
 router.get("/contactus", async (req, res) => {
     let token;
 
@@ -73,6 +142,7 @@ router.get("/contactus", async (req, res) => {
     res.render("contactus.ejs", { token: token });
 })
 
+// Login page
 router.get("/login", async (req, res) => {
     let token;
 
@@ -87,6 +157,7 @@ router.get("/login", async (req, res) => {
     res.render("login.ejs", { token: token });
 })
 
+// Sign up page
 router.get("/signup", async (req, res) => {
     let token;
 
@@ -102,42 +173,39 @@ router.get("/signup", async (req, res) => {
     res.render("signup.ejs", { token: token });
 })
 
+// Log user out and return to homepage
 router.get("/logout", (req, res) =>{
     res.clearCookie("token");
     res.redirect("/");
 })
 
-router.get("/myaccount", async (req, res) => {
-    let token;
-
-    if (req.cookies.token) {
-        try {
-            token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            res.render("account.ejs", { token });
-        } catch (e) {
-            token = null;
-        }
-    }
+// Account info
+router.get("/myaccount", auth, async (req, res) => {
+    let token = req.token;
+    res.render("account.ejs", { token });
 })
 
-router.get("/changepassword", async (req, res) => {
-    let token;
-
-    if (req.cookies.token) {
-        try {
-            token = await jwt.verify(req.cookies.token, process.env.SECRET);
-            return res.render("changePass.ejs", { token });
-        } catch (e) {
-            token = null;
-        }
-    }
-    return res.redirect("/");
+// Change password
+router.get("/changepassword", auth, async (req, res) => {    
+    let token = req.token;
+    return res.render("changePass.ejs", { token });
 })
 
+// Orders page (unfinished)
+//todo Query orders and display on page
+router.get("/myorders", auth, async (req, res) =>{
+    let token = req.token;
+    const {userid} = req.token.user;
 
-
-module.exports = router;
-
+    try{
+        const [orders_rows] = await db.execute("SELECT * FROM `order` WHERE user_id=?;", [user_id]);
+        const orders = orders_rows[0];
+        console.log(orders)
+    }catch(e){
+        orders = null;   
+    }
+    return res.render("myOrders.ejs", { token, orders });    
+})
 
 // Lists all available orders (uses input from orders route)
 router.get("/listorders", adminAuth, async (req, res) => {
@@ -149,9 +217,9 @@ router.get("/listorders", adminAuth, async (req, res) => {
             }
         })
     ]);
-
+    
     const orders = await orderResponse.json();
-
+    
     res.render("admin/listorders.ejs", { token: req.cookies.token, orders: orders.orders, products: orders.products });
 })
 
@@ -165,10 +233,10 @@ router.get("/listproducts", adminAuth, async (req, res) => {
             }
         })
     ]);
-
+    
     const products = await productResponse.json();
-
-
+    
+    
     res.render("admin/listproducts.ejs", { token: req.cookies.token, products: products });
 })
 
@@ -182,7 +250,7 @@ router.get("/listusers", adminAuth, async (req, res) => {
             }
         })
     ]);
-
+    
     const users = await userResponse.json();
     res.render("admin/listusers.ejs", { token: req.cookies.token, users: users });
 })
@@ -197,7 +265,7 @@ router.get("/updateuser/:username", adminAuth, async (req, res) => {
             }
         })
     ])
-
+    
     const user = await userResponse.json();
     res.render("admin/updateuser.ejs", { token: req.cookies.token, user : user });
 })
@@ -217,15 +285,15 @@ router.get("/updateproduct/:id", adminAuth, async (req, res) => {
             }
         })
     ])
-
+    
     const product = await productResponse.json();
-
+    
     res.render("admin/updateproduct.ejs", { token: req.cookies.token, product : product });
 })
 
 // Renders the order products page, taking the id of the user as input 
 router.get("/listorderproducts/:id", adminAuth, async (req, res) => {
-
+    
     const [orderResponse] = await Promise.all([
         await fetch("http://localhost:3000/orders/search/" + req.params.id, {
             method: 'GET',
@@ -234,9 +302,9 @@ router.get("/listorderproducts/:id", adminAuth, async (req, res) => {
             }
         })
     ])
-
+    
     const orders = await orderResponse.json();
-
+    
     res.render("admin/listorderproducts.ejs", { token: req.cookies.token, orders : orders.orders, products: orders.products });
 })
 
@@ -256,7 +324,7 @@ router.get("/admin", adminAuth, async (req, res) => {
             }
         })
     ]);
-
+    
     const users = await userResponse.json();
     const products = await productResponse.json();
 
@@ -264,4 +332,3 @@ router.get("/admin", adminAuth, async (req, res) => {
 })
 
 module.exports = router;
-

@@ -24,69 +24,20 @@
 
             <div class="row row-2">
                 <h2>Mens</h2>
-                <select>
-                    <option>Default Sorting</option>
-                    <option>Sort Price</option>
-                </select>
             </div>
 
 
             <div class="row">
-                <div class="col-4">
-                    <img src="images/product-1.jpg">
-                    <h4>Red Printed T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/luke.jpg">
-                    <h4>Red Printed T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/end.jpg">
-                    <h4>CP Company T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="">
-                    <h4>T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
+                <% products.forEach(product => { %>
+                    <div class="col-4">
+                        <img class="product-img" src=<%=`/images/${product.image}`%>>
+                        <h4><%=product.name%></h4>
+                        <p>£<%=product.cost%></p>
+                        <a href=<%=`/product/${product.product_id}`%>>
+                            <button id="button">View Product</button>
+                        </a>
+                </div>      
+                <%}); %>
             </div>
-
-       
-    
-        
-
-        
-       
     </body>
 </html>
