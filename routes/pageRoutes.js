@@ -72,6 +72,21 @@ router.get("/checkout/:id", async (req, res) => {
     return res.render("checkout.ejs", { token, product })
 })
 
+router.get("/checkout", async (req, res) => {
+    const [checkoutResponse] = await Promise.all([
+        await fetch("http://localhost:3000/checkout", {
+            method: 'POST',
+            headers: {
+                'Authorization': req.cookies.token,
+            }
+        })
+    ]);
+
+    const checkout = await checkoutResponse.json();
+
+    return res.render("checkout.ejs", { token: req.cookies.token, checkout: checkout })
+})
+
 // Page for mens clothing
 router.get("/mens", async (req, res) => {
     let token;

@@ -123,4 +123,32 @@ router.get("/remove/basket", auth, async (req, res) => {
     }
 })
 
+// Checkout basket
+router.post("/checkout", auth, async (req, res) => {
+    try {
+        const username = req.token.user.username;
+
+        // Finds user from username
+        const [user_row] = await db.execute(`SELECT * FROM user WHERE username=?;`, [username]);
+        let user = user_row[0];
+
+        // Returns an error if the username is not valid for any existing user
+        if (!user)
+            return res.status(400).send({ message: "This user could not be found." });
+
+        const [basket_row] = await db.execute(`SELECT * FROM basket WHERE user_id=?;`, [user.user_id]);
+        let basket = basket_row[0];
+
+        if (!basket)
+            return res.status(400).send({ message: "You do not have a basket to checkout yet." });
+
+        console.log(basket);
+
+        return res.send({ basket: basket_row });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send(e);
+    }
+})
+
 module.exports = router;

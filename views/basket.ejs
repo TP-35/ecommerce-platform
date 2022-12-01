@@ -29,7 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Loops through orders and populates table -->
+                                <!-- Loops through products and populates table -->
                                 <% if (products && products.length) { for (var i=0; i < products.length; i++) { %>
                                     <tr>
                                         <td>
@@ -61,6 +61,11 @@
                                         <% } %>
                             </tbody>
                         </table>
+                        <% if (products && products.length) { %>
+                        <a href=<%=`/checkout`%>>
+                            <button id="button">Checkout</button>
+                        </a>
+                        <% } %>
                     </div>
                 </div>
             </div>
