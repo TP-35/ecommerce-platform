@@ -54,24 +54,6 @@ router.get("/product/:id", async (req, res) => {
     return res.render("ProductUpClose.ejs", { token, product, moreProducts });
 })
 
-// Checkout page for individual product
-//todo implement basket?
-router.get("/checkout/:id", async (req, res) => {
-    // query product info
-    let product = await db.execute(`SELECT * FROM product WHERE product_id = ?;`, [req.params.id]);
-    product = product[0][0];
-
-    if (req.cookies.token) {
-        try {
-            token = await jwt.verify(req.cookies.token, process.env.SECRET);
-        } catch (e) {
-            token = null;
-        }
-    }
-
-    return res.render("checkout.ejs", { token, product })
-})
-
 router.get("/checkout", async (req, res) => {
     const [checkoutResponse] = await Promise.all([
         await fetch("http://localhost:3000/checkout", {
@@ -84,7 +66,7 @@ router.get("/checkout", async (req, res) => {
 
     const checkout = await checkoutResponse.json();
 
-    return res.render("checkout.ejs", { token: req.cookies.token, checkout: checkout })
+    return res.render("checkout.ejs", { token: req.token, checkout: checkout })
 })
 
 // Page for mens clothing
@@ -363,7 +345,7 @@ router.get("/updateproduct/:id", adminAuth, async (req, res) => {
 
     const product = await productResponse.json();
 
-    res.render("admin/updateproduct.ejs", { token: req.cookies.token, product: product });
+    res.render("admin/updateproduct.ejs", { token: req.token, product: product });
 })
 
 // Renders the order products page, taking the id of the user as input 
