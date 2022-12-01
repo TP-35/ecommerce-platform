@@ -1,3 +1,4 @@
+const fullname = document.getElementById("full-name");
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const city = document.getElementById("city");
@@ -15,6 +16,7 @@ const errorMessage = document.getElementById("error-message");
         city.placeholder = data.city;
         address.placeholder = data.address;
         postcode.placeholder = data.postcode;
+        fullname.placeholder = data.fullname;
     }catch(e){
         window.location.href="/";
     }

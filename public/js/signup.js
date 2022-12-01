@@ -3,6 +3,7 @@ const errorMessage = document.getElementById("error-message");
 const onSignup = async (e) => {
     e.preventDefault();
     
+    const fullname = e.target.fullname.value;
     const email = e.target.email.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
@@ -20,6 +21,7 @@ const onSignup = async (e) => {
             method: "POST",
             body: JSON.stringify({
                 email,
+                fullname,
                 username,
                 password,
                 confirmPassword,

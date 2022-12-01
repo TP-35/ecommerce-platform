@@ -8,10 +8,10 @@ const jwt = require("jsonwebtoken");
 // Sign-up Route
 router.post("/signup", async (req, res) => {
     try {
-        let { email, username, password, confirmPassword, city, postcode, address } = req.body;
-
+        let { email, fullname, username, password, confirmPassword, city, postcode, address } = req.body;
         // Remove whitespace
         email = email?.trim() || "";
+        fullname = fullname?.trim() || "";
         username = username?.trim() || "";
         password = password?.trim() || "";
         confirmPassword = confirmPassword?.trim() || "";
@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
         address = address?.trim() || "";
 
         // Make sure form was filled
-        if (!email || !username || !password || !confirmPassword || !city || !postcode || !address) {
+        if (!email || !fullname || !username || !password || !confirmPassword || !city || !postcode || !address) {
             return res.status(400).send({ message: "Please fill the form." });
         }
 
@@ -53,7 +53,7 @@ router.post("/signup", async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         // Save user to database
-        const user = await db.execute(`INSERT INTO user (email, username, password, role_id) VALUES (?, ?, ?, ?);`, [email, username, hashedPassword, 1]);
+        const user = await db.execute(`INSERT INTO user (email, fullname, username, password, role_id) VALUES (?, ?, ?, ?, ?);`, [email, fullname, username, hashedPassword, 1]);
         const userid = user[0].insertId;
         // Save address to database
         await db.execute(`INSERT INTO address (user_id, city, postcode, address) VALUES (?, ?, ?, ?)`, [userid, city, postcode, address]);
