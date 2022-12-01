@@ -102,6 +102,7 @@ router.get("/basket", auth, async (req, res) => {
     }
 })
 
+// Remove basket
 router.get("/remove/basket", auth, async (req, res) => {
     try {
         const username = req.token.user.username;
@@ -136,19 +137,33 @@ router.post("/checkout", auth, async (req, res) => {
         if (!user)
             return res.status(400).send({ message: "This user could not be found." });
 
+        const [address_row] = await db.execute(`SELECT * FROM address WHERE user_id=?;`, [user.user_id]);
+        let address = address_row[0];
+        
+        if (!address)
+            return res.status(400).send({ message: "There is no address for this user." });
+
         const [basket_row] = await db.execute(`SELECT * FROM basket WHERE user_id=?;`, [user.user_id]);
         let basket = basket_row[0];
 
         if (!basket)
             return res.status(400).send({ message: "You do not have a basket to checkout yet." });
 
-        console.log(basket);
-
-        return res.send({ basket: basket_row });
+        return res.send({ user: user, address: address, basket: basket_row });
     } catch (e) {
         console.log(e);
         return res.status(500).send(e);
     }
+})
+
+// Get total cost of Checkout
+router.get("/checkout/total", auth, async (req, res) => {
+    const order_total = 0;
+    const [order_total_row] = await db.execute(`SELECT * FROM product AS pr INNER JOIN basket AS ba WHERE ba.product_id = pr.product_id`);
+    order_total_row.forEach(order => {
+        order_total += order.cost;
+    })
+    return order_total;
 })
 
 module.exports = router;

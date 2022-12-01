@@ -16,7 +16,7 @@
     <% if (orders && orders.length) { for (var i = 0; i < orders.length; i++) { %>
     <h1>Order ID: <%=orders[i].order_id%> </h1>
         <% if (products && products.length) { for (var j = 0; j < products.length; j++) { %>
-             <p>[Test] <%=products[j].name%> </p>
+             <p><%=products[j].name%> </p>
         <% } }%>
     <% } } else { %>
         <%= order.message %>

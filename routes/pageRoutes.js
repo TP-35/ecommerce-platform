@@ -279,8 +279,6 @@ router.get("/myorders", auth, async (req, res) => {
 
     const orders = await orderResponse.json();
 
-    console.log(orders);
-
     return res.render("myOrders.ejs", { token: req.token, order: orders, orders: orders.orders, products: orders.products });
 })
 
