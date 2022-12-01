@@ -382,7 +382,7 @@ router.get("/listorderproducts/:id", adminAuth, async (req, res) => {
 
     const orders = await orderResponse.json();
 
-    res.render("admin/listorderproducts.ejs", { token: req.cookies.token, orders: orders.orders, products: orders.products });
+    res.render("admin/listorderproducts.ejs", { token: req.cookies.token, orders: orders, products: orders.products });
 })
 
 // Renders the admin page (uses input from users and products)

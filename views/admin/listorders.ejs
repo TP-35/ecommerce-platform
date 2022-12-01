@@ -28,23 +28,23 @@
                                 </thead>
                                 <tbody>
                                     <!-- Loops through orders and populates table -->
-                                    <% if (orders.length) { for (var i=0; i < orders.length; i++) { %>
+                                    <% if (orders.orders && orders.orders.length) { for (var i=0; i < orders.orders.length; i++) { %>
                                         <tr>
                                             <td>
-                                                <%= orders[i].order_id%>
+                                                <%= orders.orders[i].order_id%>
                                             </td>
                                             <td>
                                                 <!-- Allows the name to be clicked to redirect the user -->
                                                 <script type="text/javascript">
-                                                    var name = "<%= orders[i].user_id%>";
-                                                    document.write('<a href="listorderproducts/' + name + '"><%= orders[i].username%> </a>');
+                                                    var name = "<%= orders.orders[i].user_id%>";
+                                                    document.write('<a href="listorderproducts/' + name + '"><%= orders.orders[i].username%> </a>');
                                                 </script>
                                             </td>
                                             <td>
-                                                <%= orders[i].order_date%>
+                                                <%= orders.orders[i].order_date%>
                                             </td>
                                             <td>
-                                                <%= orders[i].order_total%>
+                                                <%= orders.orders[i].order_total%>
                                             </td>
                                         </tr>
                                         <!-- Returns an error message if there are no available records  -->
