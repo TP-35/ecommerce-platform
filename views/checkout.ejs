@@ -1,62 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <%- include('./partials/head.ejs', {title: "Checkout"}) %>
-<head>
-<!--Import stylesheet for checkout page-->
-<link rel = "stylesheet" type = "text/css" href = "checkout.css" />
-</head>
+  <%- include('./partials/head.ejs', {title: "Checkout", css:"/css/checkout.css"}) %>
 <body>
 
     <!-- Header for checkout page with title -->
+    <%- include("./partials/nav.ejs", {token}) %> 
 <h2>Checkout Form</h2>
 <div class="row">
   <div class="col-75">
     <div class="container">
-      <form action="/action_page.php">
+      <!--! onCheckout not working-->
+      <form onsubmit="onCheckout(event)">
       
          <!-- Shipping address section where user has to input their details and address -->
         <div class="row">
           <div class="col-50">
             <h3>Shipping Address</h3>
             <label for="fname"><i class="fa fa-user"></i> Full Name</label>   <!-- Label to ask for user's full name  -->
-            <input type="text" id="fname" name="firstname" placeholder="">
+            <input type="text" id="full-name" name="fullname" placeholder="" required>
             <label for="email"><i class="fa fa-envelope"></i> Email</label>  <!-- Label to ask for user's email  -->
-            <input type="text" id="email" name="email" placeholder="">
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label> <!-- Label to ask for user's address  -->
-            <input type="text" id="adr" name="address" placeholder="">
-            <label for="housenumber">House Number</label> <!-- Label for user's house number  -->
-            <input type="text" id="hnumber" name="housenumber" placeholder="">
+            <input type="text" id="email" name="email" placeholder="" required>
+            <label for="address"><i class="fa fa-address-card-o"></i> Address</label> <!-- Label to ask for user's address  -->
+            <input type="text" id="address" name="address" placeholder="" required>
 
             <div class="row">
               <div class="col-50">
                 <label for="city"><i class="fa fa-institution"></i> City</label> <!-- Label to ask for user's city  -->
-                <input type="text" id="city" name="city" placeholder="">
+                <input type="text" id="city" name="city" placeholder="" required>
               </div>
               <div class="col-50">
                 <label for="postcode">Postcode</label>  <!-- Label for user's postal code  -->
-                <input type="text" id="postcode" name="postcode" placeholder="">
+                <input type="text" id="postcode" name="postcode" placeholder="" required>
               </div>
             </div>
           </div>
           
         </div>
-        <input type="submit" value="Proceed to checkout" class="button"> <!-- Proceed to checkout button -->
+        <input type="submit" class="button"> <!-- Proceed to checkout button -->
       </form>
     </div>
   </div>
  
-  <div class="col-25">
-    <div class="container"> <!-- Shopping basket section to state products and total  -->
+<!--    <div class="col-25">
+    <div class="container"> <!-- Shopping basket section to state products and total  
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-      <p><a href="#">Product 1</a> <span class="price">£45</span></p>   <!-- Price for product 1 -->
-      <p><a href="#">Product 2</a> <span class="price">£20</span></p>   <!-- Price for product 2 -->
-      <p><a href="#">Product 3</a> <span class="price">£15</span></p>   <!-- Price for product 3 -->
-      <p><a href="#">Product 4</a> <span class="price">£60</span></p>   <!-- Price for product 4  -->
+      <p><a href="#">Product 1</a> <span class="price">£45</span></p>   
+      <p><a href="#">Product 2</a> <span class="price">£20</span></p>   
+      <p><a href="#">Product 3</a> <span class="price">£15</span></p>   
+      <p><a href="#">Product 4</a> <span class="price">£60</span></p>  
       <hr>
-      <p>Total <span class="price" style="color:black"><b>£140</b></span></p> <!-- Total amount for all products -->
+      <p>Total <span class="price" style="color:black"><b>£140</b></span></p> 
     </div>
-  </div>
+  </div> -->
 </div>
 <%- include('./partials/footer.ejs') %>
+<script src="/js/checkout.js"></script>
 </body>
 </html>

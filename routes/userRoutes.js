@@ -8,10 +8,10 @@ const jwt = require("jsonwebtoken");
 // Sign-up Route
 router.post("/signup", async (req, res) => {
     try {
-        let { email, username, password, confirmPassword, city, postcode, address } = req.body;
-
+        let { email, fullname, username, password, confirmPassword, city, postcode, address } = req.body;
         // Remove whitespace
         email = email?.trim() || "";
+        fullname = fullname?.trim() || "";
         username = username?.trim() || "";
         password = password?.trim() || "";
         confirmPassword = confirmPassword?.trim() || "";
@@ -20,7 +20,7 @@ router.post("/signup", async (req, res) => {
         address = address?.trim() || "";
 
         // Make sure form was filled
-        if (!email || !username || !password || !confirmPassword || !city || !postcode || !address) {
+        if (!email || !fullname || !username || !password || !confirmPassword || !city || !postcode || !address) {
             return res.status(400).send({ message: "Please fill the form." });
         }
 
@@ -53,12 +53,12 @@ router.post("/signup", async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         // Save user to database
-        const user = await db.execute(`INSERT INTO user (email, username, password, role_id) VALUES (?, ?, ?, ?);`, [email, username, hashedPassword, 1]);
+        const user = await db.execute(`INSERT INTO user (email, fullname, username, password, role_id) VALUES (?, ?, ?, ?, ?);`, [email, fullname, username, hashedPassword, 1]);
         const userid = user[0].insertId;
         // Save address to database
         await db.execute(`INSERT INTO address (user_id, city, postcode, address) VALUES (?, ?, ?, ?)`, [userid, city, postcode, address]);
         //Create web token 
-        const token = await jwt.sign({ user: { username: username, email: email, role: 1 } }, process.env.SECRET, { expiresIn: '1d' });
+        const token = await jwt.sign({ user: { userid: userid, username: username, email: email, role: 1 } }, process.env.SECRET, { expiresIn: '1d' });
         // redirect to homepage
         res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         return res.send({ token });
@@ -89,7 +89,7 @@ router.post("/login", async (req, res) => {
         }
 
         // Create web token
-        const token = await jwt.sign({ user: { username: user.username, email: user.email, role: user.role_id } }, process.env.SECRET, { expiresIn: '1d' });
+        const token = await jwt.sign({ user: { userid: user.user_id, username: user.username, email: user.email, role: user.role_id } }, process.env.SECRET, { expiresIn: '1d' });
         // redirect to homepage
         res.cookie("token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.send({ token });

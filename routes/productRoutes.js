@@ -32,14 +32,14 @@ router.get("/products/:id", async (req, res) => {
 })
 
 // List all available Products route (used to list available products)
-router.get("/products", auth, async (req, res) => {
+router.get("/products", async (req, res) => {
     try {
         // Finds all products, with a valid stock (quantity > 0)
         const [products_rows] = await db.execute(`SELECT * FROM product tb1
         JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
         WHERE tb2.quantity > 0 ORDER BY product_id;`);
         const products = products_rows[0];
-
+        
         // Returns an error if there are no products currently stored in the table
         if (!products)
             return res.status(400).send({ message: "There are currently no products in this table." });

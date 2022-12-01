@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang ="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Kickstart Men</title>
-        <link rel="stylesheet" href="s.css">
-        <link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css" >
-    </head>
+    <%- include('./partials/head.ejs', {title: "Home", css: "/css/index.css"}) %>
+
     <body>
-           
+        <%- include("./partials/nav.ejs", {token}) %>
 
             <div class="page">
                 <div class ="bannerhead">
@@ -29,22 +25,24 @@
         <div class="Section single-product">
             <div class="row">
                 <div class="col-2">
-                    <img src="images/end.jpg" width="500px", height="600px">
+                    <img src=<%=`/images/${product.image}` %> width="500px", height="600px">
                 </div>
                 <div class="col-2">
-                    <p>T-Shirt</p>
-                    <h1>Cp Company T-shirt</h1>
-                    <h4>£50.00</h4>
+                    <p><%=product.category %></p>
+                    <h1><%= product.name %> </h1>
+                    <h4>£<%= product.cost %> </h4>
                     <select>
                         <option>XL</option>
                         <option>Large</option>
                         <option>Medium</option>
                         <option>Small</option>
                     </select>
-                    <input type="number" value="1">
-                    <a href="" class="btn">Add to Basket</a>
+                    <input type="number" value="1" min="0" step="1" max="99">
+                    <a href=<%=`/checkout/${product.product_id}`%>>
+                        <button id="button">Checkout</button>
+                    </a>
                     <h3>Product Information</h3>
-                    <p>Nice casual shirt to wear</p>
+                    <p><%=product.description %></p>
                 </div>
             </div>
         </div>
@@ -52,55 +50,35 @@
         <div class="Section">
             <div class="row row-2">
                 <h2>More Products</h2>
-                <p>View More</p>
             </div>
         </div>
 
         <div class = "Section">
             <div class="row">
-                <div class="col-4">
-                    <img src="images/product-1.jpg">
-                    <h4>T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
+            <% moreProducts.forEach(product => { %>
+                    <div class="col-4">
+                        <img src=<%=`/images/${product.image}`%> height="250px">
+                        <h4><%=product.name%></h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p>£<%=product.cost%></p>
+                        <a href=<%=`/product/${product.product_id}`%>>
+                            <button id="button">View Product</button>
+                        </a>
                     </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/luke.jpg">
-                    <h4>T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/end.jpg">
-                    <h4>CP Company T-shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-               
+            <% }) %>
+            </div>       
 
-       
-    
-        
-
-        
-       
+        <script>
+            console.log(product);
+            function addToBasket(event){
+                e.preventDefault();
+            }
+        </script>
     </body>
 </html>

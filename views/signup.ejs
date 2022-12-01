@@ -7,6 +7,7 @@
     <div id="register"> 
         <form method="POST" onsubmit="onSignup(event)">
             <p class="error-message" id="error-message"></p>
+            <input class = "textbox" type ="text" name="fullname" placeholder="Full Name" required>
             <input class = "textbox" type ="email" name="email" placeholder="Email" required>
             <input class = "textbox" type = "text" name="username" placeholder="Username" required>
             <input class = "textbox" type="password" name="password" placeholder="Password" required>
@@ -18,7 +19,7 @@
             <button id="button" class="btn btn-primary" name="submit">Sign up</button>
             <br>
             <p1 id="create">Already have an account?</p1>
-            <a class="button" id="button" href="/login" target="_parent">Login</a>
+            <a href="/login" target="_parent">Login</a>
         </form>   
     </div>
 

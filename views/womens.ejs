@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang ="en">
+    <%- include("./partials/head", {title: "Womens Clothing", css:"/css/index.css"}) %>
+    <body>
+        <%- include("./partials/nav.ejs", {token}) %>       
+
+            <div class="page">
+                <div class ="bannerhead">
+                    <div class="Section">
+                        <div class="row">
+                            <div class="col-5">
+                                <p><b>Free Standard Delivery <br> On Orders Over £70</b></p>
+                                <p><b>Online shopping 24/7 <br> With Contactless Delivery</b></p>
+                                <p><b>Lots Of Great Deals<br> More Than 50% Off</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class = "Section">
+
+            <div class="row row-2">
+                <h2>Womens</h2>
+            </div>
+
+
+            <div class="row">
+                <% products.forEach(product => { %>
+                    <div class="col-4">
+                        <img class="product-img" src=<%=`/images/${product.image}`%>>
+                        <h4><%=product.name%></h4>
+                        <p>£<%=product.cost%></p>
+                        <a href=<%=`/product/${product.product_id}`%>>
+                            <button id="button">View Product</button>
+                        </a>
+                    </div>      
+                <%}); %>
+            </div>
+        </div>
+    </body>
+</html>
