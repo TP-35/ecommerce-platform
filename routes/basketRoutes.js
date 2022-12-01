@@ -149,7 +149,6 @@ router.post("/checkout", auth, async (req, res) => {
         if (!basket)
             return res.status(400).send({ message: "You do not have a basket to checkout yet." });
 
-        await db.execute(`DELETE FROM basket WHERE user_id=?;`, [user.user_id]);
         return res.send({ user: user, address: address, basket: basket_row });
     } catch (e) {
         console.log(e);

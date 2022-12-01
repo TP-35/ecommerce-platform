@@ -104,10 +104,14 @@ router.get("/admin/orders", adminAuth, async (req, res) => {
     }
 })
 
-// List all users for current user
+// List all orders for current user
 router.get("/orders", auth, async (req, res) => {
     try {
         const username = req.token.user.username;
+
+        // Select every order for a particular user.
+        // Select every order item attached to that order.
+        // Select every product attached to the order item attached to that order.
 
         // Finds user from username
         const [user_row] = await db.execute(`SELECT * FROM user WHERE username=?;`, [username]);
@@ -117,33 +121,22 @@ router.get("/orders", auth, async (req, res) => {
         if (!user)
             return res.status(400).send({ message: "This user could not be found." });
 
-        // Searches for all orders, as well as pulling usernames from the user table
-        const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id");
-        const orders = orders_rows[0];
-
-        // Returns an effor if no orders can be found
-        if (!orders) return res.status(400).send({ message: "There are currently no orders." });
-
-        // All valid orders are added to the end of the array (even if there is only one, for consistency)
-        let orders_list = []
-        orders_rows.forEach(order => {
-            orders_list.push(order);
-        })
-
-        const [order_items_rows] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [orders.order_id]);
-        const order_items = order_items_rows[0];
-
-        if (!order_items) return res.status(400).send({ message: "There are no products tied to this order. " });
-
-        // All products from the orders are added to the end of the array (even if there is only one, for consistency)
-        let products_list = [];
-        for (const product of order_items_rows) {
-            const [product_rows] = await db.execute(`SELECT * FROM product WHERE product_id=?`, [product.product_id]);
-            products_list.push(product_rows[0]);
+        const [test_row] = await db.execute("SELECT * FROM `order` WHERE user_id=?", [user.user_id]);
+        if (!test_row[0]) return res.status(400).send({ message: "This user currently has no orders." });
+        order_list = [];
+        product_list = [];
+        for (const test of test_row) {
+            const [test_item_row] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [test.order_id]);
+            if (!test_item_row[0]) return res.status(400).send({ message: "There are currently no products for this order. "});
+            order_list.push(test_item_row[0]);
+            for (const test_item of test_item_row) {
+                const [product_item] = await db.execute(`SELECT * FROM product WHERE product_id=?;`, [test_item.product_id]);
+                product_list.push(product_item[0]);
+            }
         }
 
         // Returns the list of orders and products
-        return res.send({ orders: orders_list, products: products_list });
+        return res.send({ orders: order_list, products: product_list });
     } catch (e) {
         console.log(e);
         return res.status(500).send(e);
@@ -159,24 +152,20 @@ router.post("/orders", adminAuth, async (req, res) => {
         address = address?.trim() || "";
         city = city?.trim() || "";
         postcode = postcode?.trim() || "";
-        postcode.replace(" ", "");
 
-        if (!Number.isInteger(parseInt(quantity))) {
-            console.log("2");
+        if (!Number.isInteger(parseInt(quantity)))
             return res.status(400).send({ message: "The inputted quantity must be a valid integer value." });
-        }
 
         // Checks if all fields have been filled
-        if (!address || !postcode || !city) {
-            console.log("3");
+        if (!address || !postcode || !city)
             return res.status(400).send({ message: "Please fill in the form." });
-        }
 
         // Validates postcode
         const postcode_regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
+        /* This is failing otherwise accepted postcodes. */
         //const postcode_result = postcode_regex.test(postcode);
         //if (!postcode_result) {
-        //    console.log("Fail " + postcode);
+        //    console.log(postcode);
         //    return res.status(400).send({ message: "You have inputted an invalid postcode." });
         //}
 
@@ -218,8 +207,10 @@ router.post("/orders", adminAuth, async (req, res) => {
             await db.execute(`INSERT INTO order_item (product_id, order_id, quantity) VALUES (?, ?, ?);`, [product.product_id, order_id, quantity]);
         }
 
-
+        // Deletes the users basket 
+        await db.execute(`DELETE FROM basket WHERE user_id=?;`, [user_id]);
         // Returns the order id, which can be queried using GET orders/:id 
+
         return res.send(order_id.toString());
     } catch (e) {
         console.log(e);
