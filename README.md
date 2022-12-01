@@ -1,6 +1,21 @@
 # ecommerce-platform
 > Design and deploy an e-commerce platform to sell products of a business.
 
+# Login Details
+User Accounts
+  - Lee Yongsun
+    - Username: `yongsun`
+    - Password: `Yongsun1!`
+    - Role: `user`
+  - Test Smith
+    - Username: `test`
+    - Password: `Test1!`
+    - Role: `user`
+  - Admin
+    - Username: `admin`
+    - Password: `Admin1!`
+    - Role: `admin`
+
 # Setup Local Server
 1. Clone project by running `git clone https://github.com/TP-35/ecommerce-platform.git`
 2. Install [Node.js](https://nodejs.org/en/).
