@@ -32,10 +32,10 @@
                                 </thead>
                                 <tbody>
                                     <!-- Loops through products and populates table -->
-                                    <% if (products.length) { for (var i=0; i < products.length; i++) { %>
+                                    <% if (products && products.length) { for (var i=0; i < products.length; i++) { %>
                                         <tr>
                                             <td>
-                                                <%= orders[i].order_id%>
+                                                <%= orders.orders[i].order_id%>
                                             </td>
                                             <td>
                                                 <%= products[i].name%>
@@ -56,7 +56,7 @@
                                         <!-- Returns an error message if there are no available records  -->
                                         <% } } else { %>
                                             <table>
-                                                <%= products.message %>
+                                                <%= orders.message %>
                                             </table>
                                             <% } %>
                                 </tbody>
