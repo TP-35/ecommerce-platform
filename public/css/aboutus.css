@@ -13,11 +13,12 @@ section{
     width: 85vw;
     margin: 0 auto;
 }
-.container{
+#container{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 100vw;
 }
 .content{  /* Positioning and background colour for content box*/
     background: #fff;
@@ -95,7 +96,7 @@ section{
     .icons li a{
         font-size: 15px;
     } 
-    .container{
+    #container{
         flex-direction: column;
     }
 }
