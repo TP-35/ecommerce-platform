@@ -20,6 +20,7 @@ p{
     flex-wrap: wrap;
     justify-content: space-around;
     width: 100vw;
+    max-width: 100%;
 }
 
 .col-2{
@@ -64,12 +65,9 @@ p{
 
 
 .Section{
-    
+    max-width: 100%;
     width: 100vw;
     margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-    
 }
 
 .col-4{
