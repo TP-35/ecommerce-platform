@@ -18,9 +18,8 @@ const postcode = document.getElementById("postcode");
     }
 })()
 
-const onCheckout = (e) =>{
+async function onCheckout(e){
     e.preventDefault();
     //todo save order to database
     //todo clear basket to simulate purchase 
-    window.location.href="/";
 }

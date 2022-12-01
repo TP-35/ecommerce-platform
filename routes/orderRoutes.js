@@ -104,6 +104,10 @@ router.get("/orders", adminAuth, async (req, res) => {
     }
 })
 
+router.post("/orders", auth, async(req, res) =>{
+    console.log(req.body);
+})
+
 // Create a new Order route (requires admin)
 router.post("/orders/:id", adminAuth, async (req, res) => {
 
