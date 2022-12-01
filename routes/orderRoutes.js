@@ -121,22 +121,31 @@ router.get("/orders", auth, async (req, res) => {
         if (!user)
             return res.status(400).send({ message: "This user could not be found." });
 
-        const [test_row] = await db.execute("SELECT * FROM `order` WHERE user_id=?", [user.user_id]);
-        if (!test_row[0]) return res.status(400).send({ message: "This user currently has no orders." });
-        order_list = [];
-        product_list = [];
-        for (const test of test_row) {
-            const [test_item_row] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [test.order_id]);
-            if (!test_item_row[0]) return res.status(400).send({ message: "There are currently no products for this order. "});
-            order_list.push(test_item_row[0]);
-            for (const test_item of test_item_row) {
-                const [product_item] = await db.execute(`SELECT * FROM product WHERE product_id=?;`, [test_item.product_id]);
-                product_list.push(product_item[0]);
-            }
+        // Searches for all orders, as well as pulling usernames from the user table
+        const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id;");
+        const orders = orders_rows[0];
+
+        // Returns an error if no orders can be found
+        if (!orders) return res.status(400).send({ message: "There are currently no orders. "})
+
+        let orders_list = [];
+        orders_rows.forEach(order => {
+            orders_list.push(order);
+        });
+
+        const [order_items_rows] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [orders.order_id]);
+        const order_items = order_items_rows[0];
+
+        if (!order_items) return res.status(400)>send({ message: "There are no products tied to this order." });
+
+        let products_list = [];
+        for (const product of order_items_rows) {
+            const [product_rows] = await db.execute(`SELECT * FROM product WHERE product_id=?;`,[product.product_id]);
+            products_list.push(product_rows[0]);
         }
 
         // Returns the list of orders and products
-        return res.send({ orders: order_list, products: product_list });
+        return res.send({ orders: orders_list, products: products__list });
     } catch (e) {
         console.log(e);
         return res.status(500).send(e);
@@ -198,8 +207,8 @@ router.post("/orders", adminAuth, async (req, res) => {
         order_total = (Math.round(order_total * 100) / 100).toFixed(2);
 
         // Creates a new order entry, using the user_id and product_id and stores the order_id
-        const order = await db.execute("INSERT INTO `order` (user_id, product_id, order_date, address, postcode, order_total) VALUES (?, ?, ?, ?, ?, ?);",
-            [user_id, basket.product_id, new Date(), address, postcode, order_total]);
+        const order = await db.execute("INSERT INTO `order` (user_id, order_date, address, postcode, order_total) VALUES (?, ?, ?, ?, ?);",
+            [user_id, new Date(), address, postcode, order_total]);
         const order_id = order[0].insertId;
 
         // All products from the basket are added to the end of the array (even if there is only one, for consistency)
