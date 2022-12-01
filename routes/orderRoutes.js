@@ -99,14 +99,55 @@ router.get("/admin/orders", adminAuth, async (req, res) => {
         // Returns the list of orders - without products
         return res.send({ orders: orders_list });
     } catch (e) {
-        ""
         console.log(e);
         return res.status(500).send(e);
     }
 })
 
-router.post("/orders", auth, async (req, res) => {
-    console.log(req.body);
+// List all users for current user
+router.get("/orders", auth, async (req, res) => {
+    try {
+        const username = req.token.user.username;
+
+        // Finds user from username
+        const [user_row] = await db.execute(`SELECT * FROM user WHERE username=?;`, [username]);
+        let user = user_row[0];
+
+        // Returns an error if the username is not valid for any existing user
+        if (!user)
+            return res.status(400).send({ message: "This user could not be found." });
+
+        // Searches for all orders, as well as pulling usernames from the user table
+        const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id");
+        const orders = orders_rows[0];
+
+        // Returns an effor if no orders can be found
+        if (!orders) return res.status(400).send({ message: "There are currently no orders." });
+
+        // All valid orders are added to the end of the array (even if there is only one, for consistency)
+        let orders_list = []
+        orders_rows.forEach(order => {
+            orders_list.push(order);
+        })
+
+        const [order_items_rows] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [orders.order_id]);
+        const order_items = order_items_rows[0];
+
+        if (!order_items) return res.status(400).send({ message: "There are no products tied to this order. " });
+
+        // All products from the orders are added to the end of the array (even if there is only one, for consistency)
+        let products_list = [];
+        for (const product of order_items_rows) {
+            const [product_rows] = await db.execute(`SELECT * FROM product WHERE product_id=?`, [product.product_id]);
+            products_list.push(product_rows[0]);
+        }
+
+        // Returns the list of orders and products
+        return res.send({ orders: orders_list, products: products_list });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send(e);
+    }
 })
 
 // Create a new Order route (requires admin)

@@ -268,16 +268,20 @@ router.get("/basket/remove/:id", auth, async (req, res) => {
 // Orders page (unfinished)
 //todo Query orders and display on page
 router.get("/myorders", auth, async (req, res) => {
-    let token = req.token;
-    const { userid } = req.token.user;
+    const [orderResponse] = await Promise.all([
+        await fetch("http://localhost:3000/orders", {
+            method: 'GET',
+            headers: {
+                'Authorization': req.cookies.token,
+            }
+        })
+    ]);
 
-    try {
-        const [orders_rows] = await db.execute("SELECT * FROM `order` WHERE user_id=?;", [user_id]);
-        const orders = orders_rows[0];
-    } catch (e) {
-        orders = null;
-    }
-    return res.render("myOrders.ejs", { token, orders });
+    const orders = await orderResponse.json();
+
+    console.log(orders);
+
+    return res.render("myOrders.ejs", { token: req.cookies.token, order: orders, orders: orders.orders, products: orders.products });
 })
 
 // Lists all available orders (uses input from orders route)
