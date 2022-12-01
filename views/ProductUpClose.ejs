@@ -38,7 +38,7 @@
                         <option>Small</option>
                     </select>
                     <input type="number" value="1" min="0" step="1" max="99">
-                    <a href=<%=`/checkout/${product.product_id}`%>>
+                     <a href=<%=`/basket/${product.product_id}`%>>
                         <button id="button">Checkout</button>
                     </a>
                     <h3>Product Information</h3>
@@ -76,7 +76,7 @@
 
         <script>
             console.log(product);
-            function addToBasket(event){
+            function addToBasket(e) {
                 e.preventDefault();
             }
         </script>

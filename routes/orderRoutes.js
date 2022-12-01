@@ -81,7 +81,7 @@ router.get("/orders/search/:id", auth, async (req, res) => {
 })
 
 // List all Orders route (requires admin)
-router.get("/orders", adminAuth, async (req, res) => {
+router.get("/admin/orders", adminAuth, async (req, res) => {
     try {
         // Searches for all orders, as well as pulling usernames from the user table
         const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id");
@@ -99,12 +99,13 @@ router.get("/orders", adminAuth, async (req, res) => {
         // Returns the list of orders - without products
         return res.send({ orders: orders_list });
     } catch (e) {
+        ""
         console.log(e);
         return res.status(500).send(e);
     }
 })
 
-router.post("/orders", auth, async(req, res) =>{
+router.post("/orders", auth, async (req, res) => {
     console.log(req.body);
 })
 
@@ -174,9 +175,7 @@ router.post("/orders/:id", adminAuth, async (req, res) => {
 router.post("/orders/:id", auth, async (req, res) => {
     try {
 
-        //  const order_id = req.params.id;
-
-        //  let { product_id, order_date, address, postcode, order_total, quantity } = req.body;
+        let { order_date, address, postcode, order_total, quantity } = req.body;
 
         address = address?.trim() || "";
         postcode = postcode?.trim() || "";

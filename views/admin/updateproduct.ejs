@@ -11,68 +11,81 @@
 
                     <form onsubmit="updateProduct(event)">
                         <!-- Table is split into two sections for ease of viewing -->
-                        <table class="table">
-                            <!-- Sets header for table contents -->
-                            <thead>
-                                <tr>
-                                    <th id="recent" scope="col">Update Product</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Category</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <input id="product_id" type="hidden" name="product_id"
-                                        value="<%=product.product_id%>"></input>
-                                    <td>
-                                        <input id="name" type="text" name="name" value="<%=product.name%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="description" type="text" name="description"
-                                            value="<%=product.description%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="category" type="text" name="category"
-                                            value="<%=product.category%>"></input>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table">
-                            <!-- Sets header for table contents -->
-                            <thead>
-                                <tr>
-                                    <th scope="col">Cost</th>
-                                    <th scope="col">Shipping Cost</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Stock</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input id="cost" type="text" name="cost" value="<%=product.cost%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="shippingcost" type="text" name="shippingcost"
-                                            value="<%=product.shipping_cost%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="image" type="text" name="image" value="<%=product.image%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="quantity" type="text" name="quantity"
-                                            value="<%=product.quantity%>"></input>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p class="error-message" id="error-message"></p>
+                        <div class="flex-content">
+                            <div class="flex-col">
+                                <table class="table">
+                                    <!-- Sets header for table contents -->
+                                    <thead>
+                                        <tr>
+                                            <th id="recent" scope="col">Update Product</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <input id="product_id" type="hidden" name="product_id"
+                                                value="<%=product.product_id%>"></input>
+                                            <td>
+                                                <input id="name" type="text" name="name"
+                                                    value="<%=product.name%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="description" type="text" name="description"
+                                                    value="<%=product.description%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="category" type="text" name="category"
+                                                    value="<%=product.category%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="cost" type="text" name="cost"
+                                                    value="<%=product.cost%>"></input>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table">
+                                    <!-- Sets header for table contents -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Shipping Cost</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Gender</th>
+                                            <th scope="col">Stock</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input id="shippingcost" type="text" name="shippingcost"
+                                                    value="<%=product.shipping_cost%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="image" type="text" name="image"
+                                                    value="<%=product.image%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="gender" type="text" name="gender"
+                                                    value="<%=product.gender%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="quantity" type="text" name="quantity"
+                                                    value="<%=product.quantity%>"></input>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="error-message" id="error-message" style="color: red;"></p>
+                            </div>
+                        </div>
                         <!-- Calls a function that updates the database with changed records -->
                         <button id="button" class="submit" style="float: right;">Submit</button>
                     </form>

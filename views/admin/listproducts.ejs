@@ -8,66 +8,75 @@
 
                 <%- include('../partials/sidebar.ejs') %>
 
-                    <table class="table">
-                        <!-- Set headers for table contents -->
-                        <thead>
-                            <tr>
-                                <th id="recent" scope="col">List Products</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Cost</th>
-                                <th scope="col">Shipping Cost</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Stock</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Loops through products and populates table -->
-                            <% if (products.length) { for (var i=0; i < products.length; i++) { %>
-                                <tr>
-                                    <td>
-                                        <!-- Allows the name to be clicked to redirect the user -->
-                                        <script type="text/javascript">
-                                            var name = "<%= products[i].product_id%>";
-                                            document.write('<a href="updateproduct/' + name + '"><%= products[i].name%> </a>');
-                                        </script>
-                                    </td>
-                                    <td>
-                                        <%= products[i].description%>
-                                    </td>
-                                    <td>
-                                        <%= products[i].category%>
-                                    </td>
-                                    <td>
-                                        <%= products[i].cost%>
-                                    </td>
-                                    <td>
-                                        <%= products[i].shipping_cost%>
-                                    </td>
-                                    <td>
-                                        <%= products[i].image%>
-                                    </td>
-                                    <td>
-                                        <%= products[i].quantity%>
-                                    </td>
-                                </tr>
-                                <!-- Returns an error message if there are no available records -->
-                                <% } } else { %>
-                                    <table>
-                                        <%= products.message %>
-                                    </table>
-                                    <% } %>
-                        </tbody>
-                    </table>
+                    <div class="flex-content">
+                        <div class="flex-col">
+                            <table class="table">
+                                <!-- Set headers for table contents -->
+                                <thead>
+                                    <tr>
+                                        <th id="recent" scope="col">List Products</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Cost</th>
+                                        <th scope="col">Shipping Cost</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loops through products and populates table -->
+                                    <% if (products.length) { for (var i=0; i < products.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <!-- Allows the name to be clicked to redirect the user -->
+                                                <script type="text/javascript">
+                                                    var name = "<%= products[i].product_id%>";
+                                                    document.write('<a href="updateproduct/' + name + '"><%= products[i].name%> </a>');
+                                                </script>
+                                            </td>
+                                            <td>
+                                                <%= products[i].description%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].category%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].cost%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].shipping_cost%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].image%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].gender%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].quantity%>
+                                            </td>
+                                        </tr>
+                                        <!-- Returns an error message if there are no available records -->
+                                        <% } } else { %>
+                                            <table>
+                                                <%= products.message %>
+                                            </table>
+                                            <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
 
             <script src="/js/adminpanel.js"></script>

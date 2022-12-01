@@ -6,6 +6,7 @@ const updateUser = async (e) => {
     const oldUsername = e.target.username.defaultValue;
     const newUsername = e.target.username.value;
     const password = e.target.password.value;
+    const fullName = e.target.fullname.value;
     const email = e.target.email.value;
     const role = e.target.role.value;
 
@@ -21,6 +22,7 @@ const updateUser = async (e) => {
                 oldUsername,
                 newUsername,
                 password,
+                fullName,
                 email,
                 role
             })
@@ -57,6 +59,7 @@ const addProduct = async (e) => {
     const cost = e.target.cost.value;
     const shipping_cost = e.target.shippingcost.value;
     const image = e.target.image.value;
+    const gender = e.target.gender.value;
     const quantity = e.target.quantity.value;
 
     // Tries to call the method that handles updating a product
@@ -74,6 +77,7 @@ const addProduct = async (e) => {
                 cost,
                 shipping_cost,
                 image,
+                gender,
                 quantity
             })
         })
@@ -110,6 +114,7 @@ const updateProduct = async (e) => {
     const cost = e.target.cost.value;
     const shipping_cost = e.target.shippingcost.value;
     const image = e.target.image.value;
+    const gender = e.target.gender.value;
     const quantity = e.target.quantity.value;
 
     // Tries to call the method that handles updating a product
@@ -127,6 +132,7 @@ const updateProduct = async (e) => {
                 cost,
                 shipping_cost,
                 image,
+                gender,
                 quantity
             })
         })
