@@ -87,13 +87,14 @@ router.get("/admin/products", adminAuth, async (req, res) => {
 // Create a new Product route (requires admin)
 router.post("/products", adminAuth, async (req, res) => {
     try {
-        let { name, description, category, cost, shipping_cost, image, quantity } = req.body;
+        let { name, description, category, cost, shipping_cost, image, gender, quantity } = req.body;
 
         // Remove whitespace
         name = name?.trim() || "";
         description = description?.trim() || "";
         category = category?.trim() || "";
         image = image?.trim() || "";
+        gender = gender?.trim() || "";
 
         // Accepts a quantity of 0, which will not be listed as a valid product (only to admins)
         // Checks if all fields have been filled
@@ -112,6 +113,11 @@ router.post("/products", adminAuth, async (req, res) => {
             return res.status(400).send({ message: "You have inputted an invalid shipping cost." });
         shipping_cost = parseFloat(shipping_cost);
 
+        // Ensures gender is of the two accepted values
+        gender = gender.toLowerCase();
+        if (gender !== "male" && gender !== "female")
+            return res.status(400).send({ message: "You have inputted an invalid gender." });
+
         // Ensures correct format used
         cost = (Math.round(cost * 100) / 100).toFixed(2);
         shipping_cost = (Math.round(shipping_cost * 100) / 100).toFixed(2);
@@ -129,7 +135,7 @@ router.post("/products", adminAuth, async (req, res) => {
         const inventory_id = inventory[0].insertId;
 
         // Creates a new product entry, using the inventory_id, and stores the id
-        const product = await db.execute(`INSERT INTO product (inventory_id, name, description, category, cost, shipping_cost, image) VALUES (?, ?, ?, ?, ?, ?, ?);`,
+        const product = await db.execute(`INSERT INTO product (inventory_id, name, description, category, cost, shipping_cost, gender, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
             [inventory_id, name, description, category, cost, shipping_cost, image]);
         const product_id = product[0].insertId;
 
@@ -156,7 +162,7 @@ router.post("/products/:id", adminAuth, async (req, res) => {
 
         // Checks to see if any changed fields are invalid
         const updates = Object.keys(req.body);
-        const allowedUpdates = ['name', 'description', 'category', 'cost', 'shipping_cost', 'image', 'quantity'];
+        const allowedUpdates = ['name', 'description', 'category', 'cost', 'shipping_cost', 'image', 'gender', 'quantity'];
 
         const isValid = updates.every((update) => allowedUpdates.includes(update));
         if (!isValid) return res.status(400).send({ message: "You are trying to update an invalid field." });
@@ -164,7 +170,7 @@ router.post("/products/:id", adminAuth, async (req, res) => {
         // Checks to see if all fields have been left empty
         if (updates.length == 0) return res.status(400).send({ message: "No changes have been made." });
 
-        var { name, description, category, cost, shipping_cost, image, quantity } = req.body;
+        var { name, description, category, cost, shipping_cost, image, gender, quantity } = req.body;
 
         // Remove whitespace
         name = name?.trim() || "";
@@ -173,6 +179,7 @@ router.post("/products/:id", adminAuth, async (req, res) => {
         cost = cost?.trim() || "";
         shipping_cost = shipping_cost?.trim() || "";
         image = image?.trim() || "";
+        gender = gender?.trim() || "";
         quantity = quantity?.trim() || "";
 
         // Checks if the name already exists for another product
@@ -197,14 +204,19 @@ router.post("/products/:id", adminAuth, async (req, res) => {
         if (parseFloat(shipping_cost) === "NaN")
             return res.status(400).send({ message: "You have inputted an invalid shipping cost." });
 
+
+        gender = gender.toLowerCase();
+        if (gender !== "male" && gender !== "female")
+            return res.status(400).send({ message: "You have inputted an invalid gender." });
+
         // Ensures correct format used
         cost = (Math.round(cost * 100) / 100).toFixed(2);
         shipping_cost = (Math.round(shipping_cost * 100) / 100).toFixed(2);
 
         // Updates the product with the new information
         await db.execute(`UPDATE inventory SET quantity=? WHERE inventory_id=?;`, [quantity, product.inventory_id]);
-        const [new_product_rows] = await db.execute(`UPDATE product SET name=?, description=?, category=?, cost=?, shipping_cost=?, image=? WHERE product_id=?;`,
-            [name, description, category, cost, shipping_cost, image, product.product_id]);
+        const [new_product_rows] = await db.execute(`UPDATE product SET name=?, description=?, category=?, cost=?, shipping_cost=?, image=?, gender=? WHERE product_id=?;`,
+            [name, description, category, cost, shipping_cost, image, gender, product.product_id]);
         const new_product = new_product_rows[0];
 
         // Returns the updated product

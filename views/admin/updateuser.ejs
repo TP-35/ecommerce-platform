@@ -10,46 +10,66 @@
                 <%- include('../partials/sidebar.ejs') %>
 
                     <form onsubmit="updateUser(event)">
-                        <table class="table">
-                            <!-- Sets header for table contents -->
-                            <thead>
-                                <tr>
-                                    <th id="recent" scope="col">Update User</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                                <tr>
-                                    <th scope="col">User ID</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Password</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role ID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <%= user.user_id%>
-                                    </td>
-                                    <td>
-                                        <input id="username" type="text" name="username"
-                                            value="<%=user.username%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="password" type="password" name="password" value=""></input>
-                                    </td>
-                                    <td>
-                                        <input id="email" type="email" name="email" value="<%=user.email%>"></input>
-                                    </td>
-                                    <td>
-                                        <input id="role" type="text" name="role" value="<%=user.role_id%>"></input>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p class="error-message" id="error-message"></p>
+                        <!-- Table is split into two sections for ease of viewing -->
+                        <div class="flex-content">
+                            <div class="flex-col">
+                                <table class="table">
+                                    <!-- Sets header for table contents -->
+                                    <thead>
+                                        <tr>
+                                            <th id="recent" scope="col">Update User</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">User ID</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Password</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <%=user.user_id%>
+                                            </td>
+                                            <td>
+                                                <input id="username" type="text" name="username"
+                                                    value="<%=user.username%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="password" type="password" name="password" value=""></input>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table">
+                                    <!-- Sets header for table contents -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Full Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Role ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input id="fullname" type="text" name="fullname"
+                                                    value="<%=user.fullname%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="email" type="email" name="email"
+                                                    value="<%=user.email%>"></input>
+                                            </td>
+                                            <td>
+                                                <input id="role" type="text" name="role" value="<%=user.role_id%>"></input>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="error-message" id="error-message" style="color: red;"></p>
+                            </div>
+                        </div>
                         <!-- Calls a function that updates the database with changed records -->
                         <button id="button" class="submit" style="float: right;">Submit</button>
                     </form>

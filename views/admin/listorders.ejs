@@ -8,51 +8,55 @@
 
                 <%- include('../partials/sidebar.ejs') %>
 
-                    <table class="table">
-                        <!-- Sets header for table contents -->
-                        <thead>
-                            <tr>
-                                <th id="recent" scope="col">List Orders</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                            <tr>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Order Date</th>
-                                <th scope="col">Order Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Loops through orders and populates table -->
-                            <% if (orders.length) { for (var i=0; i < orders.length; i++) { %>
-                                <tr>
-                                    <td>
-                                        <%= orders[i].order_id%>
-                                    </td>
-                                    <td>
-                                        <!-- Allows the name to be clicked to redirect the user -->
-                                        <script type="text/javascript">
-                                            var name = "<%= orders[i].user_id%>";
-                                            document.write('<a href="listorderproducts/' + name + '"><%= orders[i].username%> </a>');
-                                        </script>
-                                    </td>
-                                    <td>
-                                        <%= orders[i].order_date%>
-                                    </td>
-                                    <td>
-                                        <%= orders[i].order_total%>
-                                    </td>
-                                </tr>
-                                <!-- Returns an error message if there are no available records  -->
-                                <% } } else { %>
-                                    <table>
-                                        <%= orders.message %>
-                                    </table>
-                                    <% } %>
-                        </tbody>
-                    </table>
+                    <div class="flex-content">
+                        <div class="flex-col">
+                            <table class="table">
+                                <!-- Sets header for table contents -->
+                                <thead>
+                                    <tr>
+                                        <th id="recent" scope="col">List Orders</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Order Date</th>
+                                        <th scope="col">Order Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loops through orders and populates table -->
+                                    <% if (orders.length) { for (var i=0; i < orders.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <%= orders[i].order_id%>
+                                            </td>
+                                            <td>
+                                                <!-- Allows the name to be clicked to redirect the user -->
+                                                <script type="text/javascript">
+                                                    var name = "<%= orders[i].user_id%>";
+                                                    document.write('<a href="listorderproducts/' + name + '"><%= orders[i].username%> </a>');
+                                                </script>
+                                            </td>
+                                            <td>
+                                                <%= orders[i].order_date%>
+                                            </td>
+                                            <td>
+                                                <%= orders[i].order_total%>
+                                            </td>
+                                        </tr>
+                                        <!-- Returns an error message if there are no available records  -->
+                                        <% } } else { %>
+                                            <table>
+                                                <%= orders.message %>
+                                            </table>
+                                            <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
 
             <script src="/js/adminpanel.js"></script>

@@ -1,10 +1,9 @@
-<html>
+<html lang="en">
+
 <%- include("./partials/head.ejs", {title: "My Orders", css:"/css/MyOrders.css"}) %>
 
 <body>
     <%- include("./partials/nav.ejs", {token}) %>
-
-    <%=orders%>
 <!--Label to signify its the 'My Orders' page-->
 <div class="MyOrders">
     <h1>My Orders:</h1>
@@ -13,25 +12,15 @@
 <br>
 <br>
 <!--A box to show the orders in-->
-<div class="boxOne"> 
-    <h1>Order #</h1>
+<div class="box"> 
+    <% if (orders && orders.length) { for (var i = 0; i < orders.length; i++) { %>
+    <h1>Order ID: <%=orders[i].order_id%> </h1>
+        <% if (products && products.length) { for (var j = 0; j < products.length; j++) { %>
+             <p>[Test] <%=products[j].name%> </p>
+        <% } }%>
+    <% } } else { %>
+        <%= order.message %>
+        <% } %>
     </div>
-<br>
-<br>
-<br>
-<!--A box to show the orders in-->
-<div class="boxTwo">
-    <h1>Order #</h1>
-    </div>
-    <br>
-    <br>
-    <br>
-<!--A box to show the orders in-->
-<div class="boxThree">
-    <h1>Order #</h1>
-</div>    
-<br>
-<br>
-<br>
 </body>
 </html>
