@@ -107,45 +107,17 @@ router.get("/admin/orders", adminAuth, async (req, res) => {
 // List all orders for current user
 router.get("/orders", auth, async (req, res) => {
     try {
-        const username = req.token.user.username;
+        const {user} = req.token;
 
-        // Select every order for a particular user.
-        // Select every order item attached to that order.
-        // Select every product attached to the order item attached to that order.
-
-        // Finds user from username
-        const [user_row] = await db.execute(`SELECT * FROM user WHERE username=?;`, [username]);
-        let user = user_row[0];
-
-        // Returns an error if the username is not valid for any existing user
-        if (!user)
-            return res.status(400).send({ message: "This user could not be found." });
-
-        // Searches for all orders, as well as pulling usernames from the user table
-        const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id;");
-        const orders = orders_rows[0];
+        // GET current users orders
+        const [orders_rows] = await db.execute("SELECT order_id, order_date, address, postcode, order_total FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id AND u.user_id = ?;", [user.userid]);
 
         // Returns an error if no orders can be found
-        if (!orders) return res.status(400).send({ message: "There are currently no orders. "})
-
-        let orders_list = [];
-        orders_rows.forEach(order => {
-            orders_list.push(order);
-        });
-
-        const [order_items_rows] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [orders.order_id]);
-        const order_items = order_items_rows[0];
-
-        if (!order_items) return res.status(400)>send({ message: "There are no products tied to this order." });
-
-        let products_list = [];
-        for (const product of order_items_rows) {
-            const [product_rows] = await db.execute(`SELECT * FROM product WHERE product_id=?;`,[product.product_id]);
-            products_list.push(product_rows[0]);
-        }
+        if (orders_rows.length == 0) return res.status(400).send({ message: "There are currently no orders. "})
 
         // Returns the list of orders and products
-        return res.send({ orders: orders_list, products: products__list });
+        console.log(orders_rows)
+        return res.send({ orders: orders_rows});
     } catch (e) {
         console.log(e);
         return res.status(500).send(e);
