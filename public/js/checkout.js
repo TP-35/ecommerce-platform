@@ -52,7 +52,7 @@ const onCheckout = async (e) => {
         const data = await res.json();
 
         // Redirects the user as intended
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "/";
     } catch (e) {
         console.log(e);
     }

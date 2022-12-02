@@ -40,7 +40,7 @@ const updateUser = async (e) => {
         else if (res.status == 200) {
             errorMessage.innerText = "";
             // Redirects the user as intended
-            window.location.href = "http://localhost:3000/listusers";
+            window.location.href = "/listusers";
         }
     } catch(e) {
         console.log(e);
@@ -94,7 +94,7 @@ const addProduct = async (e) => {
         else if (res.status == 200) {
             errorMessage.innerText = "";
             // Redirects the user as intended
-            window.location.href = "http://localhost:3000/listproducts";
+            window.location.href = "/listproducts";
         }
     } catch(e) {
         console.log(e);
@@ -149,7 +149,7 @@ const updateProduct = async (e) => {
         else if (res.status == 200) {
             errorMessage.innerText = "";
             // Redirects the user as intended
-            window.location.href = "http://localhost:3000/listproducts";
+            window.location.href = "/listproducts";
         }
     } catch(e) {
         console.log(e);
