@@ -123,8 +123,8 @@ router.get("/orders", auth, async (req, res) => {
     }
 })
 
-// Create a new Order route (requires admin)
-router.post("/orders", adminAuth, async (req, res) => {
+// Create a new Order route
+router.post("/orders", auth, async (req, res) => {
     try {
 
         let { address, city, postcode, quantity } = req.body;
