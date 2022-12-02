@@ -6,32 +6,32 @@
 <!--Label to signify its the 'My Orders' page-->
 <div class="MyOrders">
     <h1>My Orders:</h1>
+    <br>
+    <br>
+    <br>
+    <!--A box to show the orders in-->
+    
+    <%if (orders && orders.length) { %>
+        <%orders.forEach(order => { %>
+            <div class="box"> 
+                <h1>Order ID: <%=order.order_id%> </h1>      
+                <h5><%=order.order_date.split("T")[0]%></h5>  
+                <h5>£<%=order.order_total%></h5>  
+                <% order.products.forEach(product => { %>
+                    <ul class="product-list">
+                        <li class="product">
+                            <a href=<%=`/product/${product.product_id}`%>>
+                                <%=product.name%>
+                            </a>
+                        </li>
+                    </ul>  
+                    <% }) %>
+                </div>
+                <br>
+            <%});%>
+        <%}%>
+        </div>
 </div>
-<br>
-<br>
-<br>
-<!--A box to show the orders in-->
-
-<%if (orders && orders.length) { %>
-    <%orders.forEach(order => { %>
-        <div class="box"> 
-            <h1>Order ID: <%=order.order_id%> </h1>      
-            <h5><%=order.order_date.split("T")[0]%></h5>  
-            <h5>£<%=order.order_total%></h5>  
-            <% order.products.forEach(product => { %>
-                <ul class="product-list">
-                    <li class="product">
-                        <a href=<%=`/product/${product.product_id}`%>>
-                            <%=product.name%>
-                        </a>
-                    </li>
-                </ul>  
-                <% }) %>
-            </div>
-            <br>
-        <%});%>
-    <%}%>
-    </div>
     
     <%- include("./partials/footer.ejs", {token}) %>
 </body>
