@@ -16,9 +16,20 @@
 
     <%if (orders && orders.length) { %>
         <%orders.forEach(order => { %>
-            <h1>Order ID: <%=order.order_id%> </h1>
-            <p><%=order.order_date.split("T")[0]%></p>  
-            <strong>£<%=order.order_total%></strong>  
+            <h1>Order ID: <%=order.order_id%> </h1>      
+            <h5><%=order.order_date.split("T")[0]%></h5>  
+            <h5>£<%=order.order_total%></h5>  
+            <br>
+            <% order.products.forEach(product => { %>
+                <ul class="product-list">
+                    <li class="product">
+                        <a href=<%=`/product/${product.product_id}`%>>
+                            <%=product.name%>
+                        </a>
+                    </li>
+                </ul>  
+            <% }) %>
+
         <%});%>
     <%}%>
     </div>

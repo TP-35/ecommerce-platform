@@ -10,13 +10,12 @@
       <div class="row">
         <div class="col-75">
           <div class="container">
-            <!--! onCheckout not working-->
             <form onsubmit="onCheckout(event)">
-
               <!-- Shipping address section where user has to input their details and address -->
               <div class="row">
                 <div class="col-50">
                   <h3>Shipping Address</h3>
+                  <p id="error-message" class="error-message"></p>
                   <label for="fname"><i class="fa fa-user"></i> Full Name</label>
                   <!-- Label to ask for user's full name  -->
                   <input type="text" id="fullname" name="fullname" placeholder="" required>

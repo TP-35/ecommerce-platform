@@ -43,7 +43,9 @@ router.get("/product/:id", async (req, res) => {
     // query product info
     let product = await db.execute(`SELECT * FROM product WHERE product_id = ?;`, [req.params.id]);
     product = product[0][0];
-    //todo if no product render 404
+    // if no product render 404
+    if(!product) res.redirect("/notfound");
+
     // query more products
     const [products_rows] = await db.execute(`SELECT * FROM product tb1
     JOIN inventory tb2 ON tb1.inventory_id = tb2.inventory_id
@@ -54,7 +56,7 @@ router.get("/product/:id", async (req, res) => {
     return res.render("ProductUpClose.ejs", { token, product, moreProducts });
 })
 
-router.get("/checkout", async (req, res) => {
+router.get("/checkout", auth, async (req, res) => {
     const [checkoutResponse] = await Promise.all([
         await fetch("http://localhost:3000/checkout", {
             method: 'POST',
@@ -247,8 +249,7 @@ router.get("/basket/remove/:id", auth, async (req, res) => {
     res.redirect("/showbasket");
 })
 
-// Orders page (unfinished)
-//todo Query orders and display on page
+// Orders page
 router.get("/myorders", auth, async (req, res) => {
     const [orderResponse] = await Promise.all([
         await fetch("http://localhost:3000/orders", {
@@ -387,5 +388,13 @@ router.get("/admin", adminAuth, async (req, res) => {
 
     res.render("admin/adminpanel.ejs", { token: req.token, users: users, products: products });
 })
+
+router.get('/notfound', (req, res) => {
+    res.render('notfound.ejs', {token: req.token});
+});
+
+router.get('*', (req, res) => {
+    res.redirect('/');
+});
 
 module.exports = router;

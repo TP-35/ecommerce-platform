@@ -110,24 +110,29 @@ router.get("/orders", auth, async (req, res) => {
         const {user} = req.token;
 
         // GET current users orders
-        const [orders_rows] = await db.execute("SELECT order_id, order_date, address, postcode, order_total FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id AND u.user_id = ?;", [user.userid]);
-
+        const [order_rows] = await db.execute("SELECT order_id, order_date, address, postcode, order_total FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id AND u.user_id = ?;", [user.userid]);
         // Returns an error if no orders can be found
-        if (orders_rows.length == 0) return res.status(400).send({ message: "There are currently no orders. "})
-
+        if (order_rows.length == 0) return res.status(400).send({ message: "There are currently no orders. "})
+        
         // Returns the list of orders and products
-        console.log(orders_rows)
-        return res.send({ orders: orders_rows});
+        
+        // Get products related to order
+        for(let i = 0; i < order_rows.length; i++){
+            let order = order_rows[i];
+            const [products] = await db.execute("SELECT name, description, p.product_id FROM `order_item` AS o INNER JOIN `order` AS u ON o.order_id = u.order_id AND o.order_id = ? INNER JOIN `product` AS p ON o.product_id = p.product_id;", [order.order_id]);
+            order_rows[i] = {...order, products}
+        }
+        
+        return res.send({ orders: order_rows});
     } catch (e) {
         console.log(e);
         return res.status(500).send(e);
     }
 })
 
-// Create a new Order route (requires admin)
-router.post("/orders", adminAuth, async (req, res) => {
+// Create a new Order route
+router.post("/orders", auth, async (req, res) => {
     try {
-
         let { address, city, postcode, quantity } = req.body;
 
         address = address?.trim() || "";
@@ -142,7 +147,7 @@ router.post("/orders", adminAuth, async (req, res) => {
             return res.status(400).send({ message: "Please fill in the form." });
 
         // Validates postcode
-        const postcode_regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
+        //const postcode_regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
         /* This is failing otherwise accepted postcodes. */
         //const postcode_result = postcode_regex.test(postcode);
         //if (!postcode_result) {
