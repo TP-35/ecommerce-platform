@@ -144,10 +144,8 @@ router.post("/orders", auth, async (req, res) => {
         const postcode_regex = /[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/gi;
 
         const postcode_result = postcode_regex.test(postcode);
-        if (!postcode_result) {
-            console.log(postcode);
+        if (!postcode_result)
             return res.status(400).send({ message: "You have inputted an invalid postcode." });
-        }
 
         // Gets currently logged in user
         const username = req.token.user.username;
