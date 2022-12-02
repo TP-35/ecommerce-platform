@@ -393,8 +393,4 @@ router.get('/notfound', (req, res) => {
     res.render('notfound.ejs', {token: req.token});
 });
 
-router.get('*', (req, res) => {
-    res.redirect('/');
-});
-
 module.exports = router;
