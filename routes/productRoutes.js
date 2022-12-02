@@ -98,7 +98,7 @@ router.post("/products", adminAuth, async (req, res) => {
 
         // Accepts a quantity of 0, which will not be listed as a valid product (only to admins)
         // Checks if all fields have been filled
-        if (!name || !description || !category || !cost || !shipping_cost || !image || (!quantity && quantity !== 0))
+        if (!name || !description || !category || !cost || !shipping_cost || !image || !gender || (!quantity && quantity !== 0))
             return res.status(400).send({ message: "Please fill in the form." });
 
         // Ensures the integer/float values are of the correct data type
@@ -135,8 +135,8 @@ router.post("/products", adminAuth, async (req, res) => {
         const inventory_id = inventory[0].insertId;
 
         // Creates a new product entry, using the inventory_id, and stores the id
-        const product = await db.execute(`INSERT INTO product (inventory_id, name, description, category, cost, shipping_cost, gender, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
-            [inventory_id, name, description, category, cost, shipping_cost, image]);
+        const product = await db.execute(`INSERT INTO product (inventory_id, name, description, category, cost, shipping_cost, image, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+            [inventory_id, name, description, category, cost, shipping_cost, image, gender]);
         const product_id = product[0].insertId;
 
         // Returns the product id, which can be queried using GET products/:id 
