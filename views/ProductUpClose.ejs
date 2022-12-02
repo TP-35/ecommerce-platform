@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang ="en">
-    <%- include('./partials/head.ejs', {title: "Home", css: "/css/index.css"}) %>
+    <%- include('./partials/head.ejs', {title: product.name, css: "/css/index.css"}) %>
 
     <body>
         <%- include("./partials/nav.ejs", {token}) %>
@@ -73,12 +73,5 @@
                     </div>
             <% }) %>
             </div>       
-
-        <script>
-            console.log(product);
-            function addToBasket(e) {
-                e.preventDefault();
-            }
-        </script>
     </body>
 </html>

@@ -4,6 +4,8 @@ const email = document.getElementById("email");
 const city = document.getElementById("city");
 const address = document.getElementById("address");
 const postcode = document.getElementById("postcode");
+const error = document.getElementById("error-message");
+
 
 (async () => {
     try {
@@ -50,10 +52,14 @@ const onCheckout = async (e) => {
 
         // Returns the message if necessary
         const data = await res.json();
+        
+        if(res.status === 200){
+            window.location.href = "/";
+        }else{
+            throw data.message;
+        }
 
-        // Redirects the user as intended
-        window.location.href = "/";
     } catch (e) {
-        console.log(e);
+        error.innerText = e;
     }
 }

@@ -4,7 +4,7 @@ const auth = async (req, res, next) => {
     // Finds the token that the user is given when they successfully login
     const token = req.cookies.token || req.headers.authorization;
     // Sends an error message if a token could not be found
-    if (!token) return res.status(400).send({ message: "A token is required for authentication." });
+    if (!token) return res.redirect("/login");
 
     try {
         // Attempts to decode the token with the SECRET variable

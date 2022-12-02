@@ -13,14 +13,25 @@
 <br>
 <!--A box to show the orders in-->
 <div class="box"> 
-    <% if (orders && orders.length) { for (var i = 0; i < orders.length; i++) { %>
-    <h1>Order ID: <%=orders[i].order_id%> </h1>
-        <% if (products && products.length) { for (var j = 0; j < products.length; j++) { %>
-             <p><%=products[j].name%> </p>
-        <% } }%>
-    <% } } else { %>
-        <%= order.message %>
-        <% } %>
+
+    <%if (orders && orders.length) { %>
+        <%orders.forEach(order => { %>
+            <h1>Order ID: <%=order.order_id%> </h1>      
+            <h5><%=order.order_date.split("T")[0]%></h5>  
+            <h5>£<%=order.order_total%></h5>  
+            <br>
+            <% order.products.forEach(product => { %>
+                <ul class="product-list">
+                    <li class="product">
+                        <a href=<%=`/product/${product.product_id}`%>>
+                            <%=product.name%>
+                        </a>
+                    </li>
+                </ul>  
+            <% }) %>
+
+        <%});%>
+    <%}%>
     </div>
 </body>
 </html>
