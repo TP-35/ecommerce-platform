@@ -4,14 +4,17 @@
     margin: 0;
 }
 
+/* error message for forms */
 .error-message{
     color: red;
 }
 
+/* success message for forms */
 .success-message{
     color: green;
 }
 
+/* navbar styling */
 .nav-list {
     display: flex;
     flex-direction: row;
@@ -79,6 +82,7 @@
     text-align: center;
 }
 
+/* Styling for buttons */
 #button{
     width: 10rem;  
     height: 3rem;
@@ -180,6 +184,7 @@
   }
 }
 
+/* Media query for navbar */
 @media only screen and (max-width: 768px){
     .nav-list{
         flex-direction: column;
