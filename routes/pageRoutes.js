@@ -317,7 +317,7 @@ router.get("/updateuser/:username", adminAuth, async (req, res) => {
         await fetch("http://localhost:3000/admin/users/" + req.params.username, {
             method: 'GET',
             headers: {
-                'Authorization': req.token,
+                'Authorization': req.cookies.token,
             }
         })
     ])
