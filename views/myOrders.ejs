@@ -11,14 +11,13 @@
 <br>
 <br>
 <!--A box to show the orders in-->
-<div class="box"> 
 
-    <%if (orders && orders.length) { %>
-        <%orders.forEach(order => { %>
+<%if (orders && orders.length) { %>
+    <%orders.forEach(order => { %>
+        <div class="box"> 
             <h1>Order ID: <%=order.order_id%> </h1>      
             <h5><%=order.order_date.split("T")[0]%></h5>  
             <h5>£<%=order.order_total%></h5>  
-            <br>
             <% order.products.forEach(product => { %>
                 <ul class="product-list">
                     <li class="product">
@@ -27,10 +26,10 @@
                         </a>
                     </li>
                 </ul>  
-            <% }) %>
-
+                <% }) %>
+            </div>
+            <br>
         <%});%>
     <%}%>
-    </div>
 </body>
 </html>
