@@ -38,24 +38,17 @@ router.get("/orders/:id", auth, async (req, res) => {
 router.get("/orders/search/:id", auth, async (req, res) => {
     try {
 
-        // Finds user from id
-        const [user_rows] = await db.execute(`SELECT * FROM user WHERE user_id=?`, [req.params.id]);
-        const user = user_rows[0];
-
-        if (!user)
-            return res.status(400).send({ message: "This user could not be found." });
-
-        const [orders_rows] = await db.execute("SELECT * FROM `order` WHERE user_id=?;", [user.user_id]);
+        // Finds order from id
+        const [orders_rows] = await db.execute("SELECT * FROM `order` WHERE order_id=?;", [req.params.id]);
         const orders = orders_rows[0];
 
         // Returns an error if no orders can be found
         if (!orders)
-            return res.status(400).send({ message: "There are currently no orders for this user." });
+            return res.status(400).send({ message: "There are currently no orders with this id." });
 
         // All valid orders are added to the end of the array (even if there is only one, for consistency)
         let orders_list = [];
         orders_rows.forEach(order => {
-            order.username = user.username;
             orders_list.push(order);
         })
 
@@ -107,32 +100,55 @@ router.get("/admin/orders", adminAuth, async (req, res) => {
 // List all orders for current user
 router.get("/orders", auth, async (req, res) => {
     try {
-        const {user} = req.token;
+        const username = req.token.user.username;
 
-        // GET current users orders
-        const [order_rows] = await db.execute("SELECT order_id, order_date, address, postcode, order_total FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id AND u.user_id = ?;", [user.userid]);
+        // Select every order for a particular user.
+        // Select every order item attached to that order.
+        // Select every product attached to the order item attached to that order.
+
+        // Finds user from username
+        const [user_row] = await db.execute(`SELECT * FROM user WHERE username=?;`, [username]);
+        let user = user_row[0];
+
+        // Returns an error if the username is not valid for any existing user
+        if (!user)
+            return res.status(400).send({ message: "[1] This user could not be found." });
+
+        // Searches for all orders, as well as pulling usernames from the user table
+        const [orders_rows] = await db.execute("SELECT * FROM `order` AS o INNER JOIN user AS u ON o.user_id = u.user_id;");
+        const orders = orders_rows[0];
+
         // Returns an error if no orders can be found
-        if (order_rows.length == 0) return res.status(400).send({ message: "There are currently no orders. "})
-        
-        // Returns the list of orders and products
-        
-        // Get products related to order
-        for(let i = 0; i < order_rows.length; i++){
-            let order = order_rows[i];
-            const [products] = await db.execute("SELECT name, description, p.product_id FROM `order_item` AS o INNER JOIN `order` AS u ON o.order_id = u.order_id AND o.order_id = ? INNER JOIN `product` AS p ON o.product_id = p.product_id;", [order.order_id]);
-            order_rows[i] = {...order, products}
+        if (!orders) return res.status(400).send({ message: "There are currently no orders. "})
+
+        let orders_list = [];
+        orders_rows.forEach(order => {
+            orders_list.push(order);
+        });
+
+        const [order_items_rows] = await db.execute(`SELECT * FROM order_item WHERE order_id=?;`, [orders.order_id]);
+        const order_items = order_items_rows[0];
+
+        if (!order_items) return res.status(400)>send({ message: "There are no products tied to this order." });
+
+        let products_list = [];
+        for (const product of order_items_rows) {
+            const [product_rows] = await db.execute(`SELECT * FROM product WHERE product_id=?;`,[product.product_id]);
+            products_list.push(product_rows[0]);
         }
-        
-        return res.send({ orders: order_rows});
+
+        // Returns the list of orders and products
+        return res.send({ orders: orders_list, products: products_list });
     } catch (e) {
         console.log(e);
         return res.status(500).send(e);
     }
 })
 
-// Create a new Order route
-router.post("/orders", auth, async (req, res) => {
+// Create a new Order route (requires admin)
+router.post("/orders", adminAuth, async (req, res) => {
     try {
+
         let { address, city, postcode, quantity } = req.body;
 
         address = address?.trim() || "";
@@ -147,13 +163,13 @@ router.post("/orders", auth, async (req, res) => {
             return res.status(400).send({ message: "Please fill in the form." });
 
         // Validates postcode
-        //const postcode_regex = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
-        /* This is failing otherwise accepted postcodes. */
-        //const postcode_result = postcode_regex.test(postcode);
-        //if (!postcode_result) {
-        //    console.log(postcode);
-        //    return res.status(400).send({ message: "You have inputted an invalid postcode." });
-        //}
+        const postcode_regex = /[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/gi;
+
+        const postcode_result = postcode_regex.test(postcode);
+        if (!postcode_result) {
+            console.log(postcode);
+            return res.status(400).send({ message: "You have inputted an invalid postcode." });
+        }
 
         // Gets currently logged in user
         const username = req.token.user.username;
