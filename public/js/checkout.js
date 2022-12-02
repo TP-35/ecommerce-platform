@@ -52,12 +52,13 @@ const onCheckout = async (e) => {
 
         // Returns the message if necessary
         const data = await res.json();
+        
         if(res.status === 200){
-            window.location.href = "http://localhost:3000/";
+            window.location.href = "/";
         }else{
-            console.log("grr")
             throw data.message;
         }
+
     } catch (e) {
         error.innerText = e;
     }
